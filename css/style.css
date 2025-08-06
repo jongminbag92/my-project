@@ -1,0 +1,143 @@
+@charset "utf-8";
+
+/* reset */
+* {margin: 0;padding: 0; box-sizing: border-box;}
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, tbody, tfoot, thead, tr, th, td{margin:0;padding:0;}
+h1, h2, h3, h4, h5, h6 {font-weight: 700; font-size: inherit;}
+a {color: inherit; text-decoration: inherit;}
+img {vertical-align: middle;}
+a img {border: none;}
+li {list-style: none;}
+address, em, i {font-style: normal;}
+a:focus {outline: none}
+button:focus {outline: none}
+
+/* layout */
+#starCanvas {position: fixed; top: 0; left: 0; z-index: 1; width: 100%; height: 100vh; pointer-events: none; opacity: 0; transition: opacity 0.5s ease;}
+#starCanvas.active {opacity: 1;}
+
+body {background: #0D0D0D; color: #fff; font-family: 'Pretendard';}
+.wrap {position: relative; margin: 0 auto; letter-spacing: -2%;}
+.en {font-family: "PP Editorial New Ultralight";}
+
+
+.inner {width: calc(100% - 340px); margin: 0 auto;}
+.black-section {background: #0D0D0D; height: 100vh;}
+
+
+header {position: fixed;  width: 100%;}
+header.hide {transform: translateY(-100%);}
+header.show {transform: translateY(0);}
+
+header .header-box {padding: 20px; box-sizing: border-box; display: flex; justify-content: flex-end; gap: 10px;}
+header .header-box a{padding: 5px; font-size: 18px; color: #0D0D0D;}
+
+/* header 스플리팅 */
+.header-box a .char {display: inline-block; position: relative; color: transparent; overflow: hidden;}
+.header-box a .char:before,
+.header-box a .char:after {content: attr(data-char); position: absolute; color: #0D0D0D; top: 0; left: 0; opacity: 0.6; transition: transform 0.35s; transition-delay: calc(30ms * var(--char-index));}
+.header-box a .char:before {transform: translateY(100%);}
+.header-box a:hover .char:before {transform: translateY(0); opacity: 1;}
+.header-box a:hover .char:after {transform: translateY(-100%);}
+
+
+
+
+
+
+.intro { width: 100%; height: 100vh; background: #fff; }
+.intro .inner { margin-top: auto;
+display: flex; justify-content: center; align-items: center;
+flex-direction: column; padding-top: 50px;}
+  /* margin-top: auto를 준 자식 요소는 남는 공간을 위로 밀어내서 아래쪽에 위치하게 돼. */
+.intro .intro-title span {display: block; text-align: center; font-size: 50px; color: #0D0D0D; line-height: 1.2;}
+.intro .intro-title span.en {font-size: 60px; font-family: "PP Editorial New";}
+
+
+
+.stack {
+  position: relative;
+  width: 350px;
+  height: 400px;
+}
+
+.stack img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  border-radius: 20px;
+  transition: all 0.8s ease;
+  opacity: 0;
+}
+
+.stack img:nth-child(1) {
+  z-index: 1;
+  transform: translate(-50%, -50%) rotate(-10deg) translateY(200px);
+  transition-delay: 0.3s;
+}
+.stack img:nth-child(2) {
+  z-index: 2;
+  transform: translate(-50%, -50%) rotate(10deg) translateY(500px);
+  transition-delay: 0.5s;
+}
+.stack img:nth-child(3) {
+  z-index: 3;
+  transform: translate(-50%, -50%) rotate(0deg) translateY(700px);
+  transition-delay: 0.7s;
+}
+
+.stack img.motion:nth-child(1) {
+  transform: translate(-50%, -50%) rotate(-10deg) translateY(0px);
+  opacity: 1; transition-delay: 0.3s;
+}
+.stack img.motion:nth-child(2) {
+  transform: translate(-50%, -50%) rotate(10deg) translateY(0px);
+  opacity: 1; transition-delay: 0.5s;
+}
+.stack img.motion:nth-child(3) {
+  transform: translate(-50%, -50%) rotate(0deg) translateY(0px);
+  opacity: 1; transition-delay: 0.7s;
+}
+
+
+
+
+
+.intro .intro-text {color: #0D0D0D; font-size: 300px; text-align: center;}
+.intro-text .char {
+  display: inline-block;
+  position: relative;
+  color: transparent;
+  overflow: hidden;
+}
+.intro-text .char::before,
+.intro-text .char::after {
+  content: attr(data-char);
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #0D0D0D;
+  opacity: 1;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+  transition-delay: calc(30ms * var(--char-index));
+}
+
+.intro-text .char::before {
+  transform: translateY(100%);
+}
+
+.intro-text .char::after {
+  transform: translateY(0);
+}
+
+/* 스크롤 트리거 시 효과 적용 */
+.intro-text.active .char::before {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.intro-text.active .char::after {
+  transform: translateY(-100%);
+}
