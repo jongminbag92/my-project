@@ -119,95 +119,79 @@ flex-direction: column; padding-top: 50px;}
 .hobby {position: relative; width: 100%; height: 100vh; display: flex; justify-content: center; align-items: center;}
 .hobby .section-title {position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 2;}
 .hobby .section-title h2 {font-size: 40px; margin-bottom: 20px;}
-.hobby .section-title span {font-size: 20px; color: #ccc; line-height: 1.4;}
+.hobby .section-title span {font-size: 20px; color: #8B8B8B; line-height: 1.4;}
 
-.hobby-images {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.hobby-img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 200px;
-  height: 200px; overflow: hidden;
-  object-fit: cover;
-  border-radius: 12px;
-  opacity: 0;
-}
+.hobby-images {position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);}
+.hobby-img {position: absolute; top: 0; left: 0; width: 200px; height: 200px; overflow: hidden; object-fit: cover; border-radius: 12px; opacity: 0;}
 .hobby-img img {width: 100%; height: 100%;}
 
 
 
 /* skill-section */
-.skill-section {width: 100%; height: 100vh;}
-.skill-grid {position: relative;  overflow: hidden;
-  gap: 3px;
-}
+.skill-section {position: relative; width: 100%; height: 150vh;}
+.skill-section .section-title {position: absolute; left: 50%; top: 30%; transform: translate(-50%, -30%); text-align: center; z-index: 2;}
+.skill-section .section-title h2 {font-size: 40px; margin-bottom: 20px;}
+.skill-section .section-title span {font-size: 20px; color: #8B8B8B; line-height: 1.4;}
+.skill-grid {position: absolute; overflow: hidden; gap: 3px; width: 100%; bottom: 0;}
 .skill-grid .grid {width: 100%; display: flex; gap: 3px; margin-bottom: 3px;}
+.skill-grid .middle-box {transform: translateX(100px);}
+.box {position: relative; font-size: 40px; flex: 1; background: #0D0D0D; color: #FFF; padding: 100px 0; text-align: center; border: 2px solid rgba(255, 255, 255, 0.02); box-sizing: border-box;}
+.box-info {position: absolute; width: 80%; height: auto; display: flex; flex-direction: column; gap: 5px;}
+.box-info p {font-weight: 600; text-align: left; margin-bottom: 20px;}
+.box-info .count-num {color: #fff;}
+.box-info span {color: #2F71DF;}
+.box-info .box-text {font-size: 16px; font-weight: normal; text-align: left; color: #8B8B8B;}
+.box-info.top {left: 50%; top: 10%; transform: translate(-50%, -10%);}
+.box-info.bottom {left: 50%; bottom: 0%; transform: translate(-50%, 0%);}
 
-.skill-grid .top-box {
-  transform: translateX(-50px);
-}
-
-.skill-grid .middle-box {
-  transform: translateX(50px);
-}
-
-.skill-grid .bottom-box {
-  transform: translateX(-50px);
-}
+.cursor-glow {position: absolute; width: 150px; height: 150px; border-radius: 50%; pointer-events: none; z-index: -1; transform: translate(-50%, -50%); opacity: 0; transition: opacity 0.2s ease, transform 0.05s linear; 
+background: radial-gradient(circle, #2F71DF 100%, transparent 70%); 
+background-repeat: no-repeat; 
+box-shadow: 
+0 0 10px #2F71DF, 
+0 0 20px #2F71DF, 
+0 0 40px #2F71DF, 
+0 0 80px #2F71DF; 
+filter: blur(1px) brightness(1.5) drop-shadow(0 0 6px #2F71DF) drop-shadow(0 0 12px #2F71DF) drop-shadow(0 0 24px #2F71DF) drop-shadow(0 0 50px #2F71DF);}
 
 
-.box {width: 33%; font-size: 40px;
-  background: #111; overflow: hidden;
-  color: white;
-  padding: 100px 20px;
-  text-align: center;
-  border: 2px solid rgba(255, 255, 255, 0.05);
+/* marquee */
+.marquee-section {
   position: relative;
-  z-index: 1;
+  overflow: hidden;
 }
 
-/* 마우스 따라가는 네온 glow */
-.cursor-glow {
+.floating-text {
   position: absolute;
-  width: 150px;
-  height: 150px; border-radius: 50%;
-  pointer-events: none;
-  z-index: -1;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  transition: opacity 0.2s ease, transform 0.05s linear;
-
-  background: radial-gradient(circle, #2F71DF 100%, transparent 70%);
-  background-repeat: no-repeat;
-
-  /* 💡 네온 강조 */
-  box-shadow:
-    0 0 10px #2F71DF,
-    0 0 20px #2F71DF,
-    0 0 40px #2F71DF,
-    0 0 80px #2F71DF;
-
-  filter:
-    blur(1px)
-    brightness(1.5)
-    drop-shadow(0 0 6px #2F71DF)
-    drop-shadow(0 0 12px #2F71DF)
-    drop-shadow(0 0 24px #2F71DF)
-    drop-shadow(0 0 50px #2F71DF);
-}
-#starCanvas {
-  position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 50; /* cursor-glow 아래 or 원하는 곳에 */
+  font-size: 6vw;
+  font-weight: bold;
+  background: linear-gradient(to right, #3ADF00, #A0F0D0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  white-space: nowrap;
+  z-index: 10;
+  opacity: 0;
 }
 
+.floating-text.marquee {
+  position: fixed;
+  top: 10%;
+  left: 100%;
+  animation: scroll-left 10s linear infinite;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-150%);
+  }
+}
+
+.cloneCoding-section {
+  height: 100vh;
+  background: gray;
+}

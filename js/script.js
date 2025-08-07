@@ -6,14 +6,14 @@ window.addEventListener('DOMContentLoaded', () => {
     startStarCanvasAnimation();
     observeBlackSection();
 
-    gsap.registerPlugin(ScrollTrigger);
+    gsap.registerPlugin(ScrollTrigger, TextPlugin, MotionPathPlugin);
     initIntroTextScrollTrigger();
     VideoSectionScrollTrigger();
     strengthScrollAnimation();
     hobbyImages();
     skillMouse();
-    particle();
-
+    skillCounting();
+    marquee();
 });
 
 
@@ -255,7 +255,7 @@ function hobbyImages() {
       trigger: '.hobby',
       start: 'top 30%',
       toggleActions: 'play none none reverse',
-      markers:true
+      //markers:true
     }
   })
   .to(imgs[0], { x: -550, y: -200, duration: 1 }, 0)
@@ -289,53 +289,63 @@ grid.addEventListener('mouseleave', () => {
 });
 }
 
-function particle(){
-  const canvas = document.getElementById('starCanvas');
-const ctx = canvas.getContext('2d');
-let stars = [];
+// 스킬 카운팅
+function skillCounting() {
+  document.querySelectorAll('.count-num').forEach((el) => {
+  const target = +el.dataset.target;
 
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
-
-document.addEventListener('mousemove', (e) => {
-  for (let i = 0; i < 3; i++) {
-    stars.push({
-      x: e.clientX,
-      y: e.clientY,
-      radius: Math.random() * 1.5 + 0.5,
-      dx: (Math.random() - 0.5) * 1.5,
-      dy: (Math.random() - 0.5) * 1.5,
-      life: 80
-    });
-  }
+  gsap.fromTo(el, 
+    { textContent: 0 }, 
+    {
+      scrollTrigger: {
+        trigger: el,
+        start: "top 90%", // 섹션이 들어올 때
+        toggleActions: "play none none none",
+        //markers:true
+      },
+      duration: 1.5,
+      textContent: target,
+      roundProps: "textContent",
+      ease: "power1.inOut"
+    }
+  );
 });
+}
 
-function animate() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  stars.forEach((star, index) => {
-    star.x += star.dx;
-    star.y += star.dy;
-    star.life--;
-
-    ctx.beginPath();
-    ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(255, 255, 255, ${star.life / 80})`;
-    ctx.shadowColor = '#fff';
-    ctx.shadowBlur = 8;
-    ctx.fill();
-
-    if (star.life <= 0) stars.splice(index, 1);
+function marquee() {
+  gsap.to(".floating-text", {
+    scrollTrigger: {
+      trigger: ".marquee-section",
+      start: "top center",
+      end: "bottom top",
+      scrub: 1,
+      markers: true
+    },
+    motionPath: {
+      path: "#gPath",
+      align: "#gPath",
+      alignOrigin: [0.5, 0.5],
+      autoRotate: false
+    },
+    opacity: 1,
+    duration: 3,
+    ease: "power2.out"
   });
 
-  requestAnimationFrame(animate);
+  ScrollTrigger.create({
+    trigger: ".cloneCoding-section",
+    start: "top center",
+    end: "bottom center",
+    onEnter: () => {
+      document.querySelector(".floating-text").classList.add("marquee");
+    },
+    onLeaveBack: () => {
+      document.querySelector(".floating-text").classList.remove("marquee");
+    }
+  });
 }
-animate();
+
+window.addEventListener("load", marquee);
 
 
 
-}
