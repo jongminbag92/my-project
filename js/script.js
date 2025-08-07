@@ -5,7 +5,14 @@ window.addEventListener('DOMContentLoaded', () => {
     headerScrollEvent();
     startStarCanvasAnimation();
     observeBlackSection();
+
     gsap.registerPlugin(ScrollTrigger);
+    initIntroTextScrollTrigger();
+    VideoSectionScrollTrigger();
+    strengthScrollAnimation();
+    hobbyImages();
+    skillMouse();
+    particle();
 
 });
 
@@ -47,6 +54,7 @@ function headerScrollEvent() {
     });
 }
 
+
 // 3. 캔버스 리사이즈
 function resizeCanvas(canvas, stars) {
     canvas.width = window.innerWidth;
@@ -71,7 +79,7 @@ function initStars(canvas, stars) {
 // 5. 별 애니메이션
 function animateStars(ctx, canvas, stars) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+    ctx.fillStyle = '#fff';
 
     stars.forEach(star => {
     star.x += star.speedX;
@@ -138,28 +146,196 @@ function observeBlackSection() {
   });
 }
 
-$(function () {
+
+// 인트로 텍스트
+function initIntroTextScrollTrigger() {
+  ScrollTrigger.create({
+    trigger: ".intro",
+    start: "center 30%",
+    end: "center 30%",
+    onEnter: () => {
+      requestAnimationFrame(() => {
+        document.querySelector(".intro-text").classList.add("active");
+      });
+    },
+    onLeaveBack: () => {
+      document.querySelector(".intro-text").classList.remove("active");
+    },
+    //markers: true
+  });
+}
+
+// video-section
+function VideoSectionScrollTrigger() {
+  gsap.timeline({
+    scrollTrigger: {
+        trigger: '.myvideo',
+        start: 'top 50%',
+        end: 'center 50%',
+        scrub:2,
+        //markers:true
+    }
+})
+.to('.videowrap', {backgroundColor:'#fff', color:'#0D0D0D', ease:'none', duration:5},0)
+.fromTo('.videoWrap video', {'clip-path': 'inset(60% round 30%)'},
+    {'clip-path': 'inset(0% round 0%)', ease:'none', duration:10},0)
+}
+
+
+function strengthScrollAnimation() {
 
   const tl = gsap.timeline({
     scrollTrigger: {
-      trigger: ".intro",
-      start: "center top",
-      end: "center center",
-      toggleActions: "play none none reverse",
-      markers: true // 테스트용
+      trigger: ".strength-section",
+      start: "top top",
+      end: "+=400%",
+      scrub: true,
+      pin: true,
+      //markers: true,
     }
   });
 
-  tl.fromTo(".intro-text .char", {
-    yPercent: 100,
-    opacity: 0
-  }, {
-    yPercent: 0,
+  // 1. 첫 번째 텍스트 등장 (초기)
+  tl.to(".strength-text:nth-child(1)", {
     opacity: 1,
-    stagger: 0.03,
-    duration: 0.5,
-    ease: "power2.out"
+    y: 0,
+    duration: 0.3
   });
+
+  // 2. 화면 줄이기 (100 → 50vw)
+  tl.to(".strength-left", {
+    width: "50vw",
+    duration: 3,
+    ease: "none"
+  }, "<"); // ← 동시에 시작
+
+  // 3. 텍스트 1 → 2 교체 (같은 시간축에 넣기)
+  tl.to(".strength-text:nth-child(1)", {
+    opacity: 0,
+    duration: 0.3
+  }, "<+=2.0"); // 화면 줄이기 시작 후 1초 후에
+
+  tl.to(".strength-text:nth-child(2)", {
+    opacity: 1,
+    y: 0,
+    duration: 0.3
+  }, "<+=0.3");
+
+  // 4. 텍스트 2 → 3 교체 (조금 더 뒤에)
+  tl.to(".strength-text:nth-child(2)", {
+    opacity: 0,
+    duration: 0.3
+  }, "<+=1.0");
+
+  tl.to(".strength-text:nth-child(3)", {
+    opacity: 1,
+    y: 0,
+    duration: 0.3
+  }, "<+=0.3");
+
+  // 5. 마지막 흰 배경 opacity 0 처리
+  tl.to(".strength-left", {
+    opacity: 0,
+    duration: 1
+  }, "+=0.5");
+  
+  tl.to(".strength-text:nth-child(3)", {
+    opacity: 0,
+    duration: 1
+  }, "<");
+}
+
+function hobbyImages() {
+  const imgs = gsap.utils.toArray('.hobby-img');
+
+  gsap.set(imgs, { opacity: 1 });
+
+  gsap.timeline({
+    scrollTrigger: {
+      trigger: '.hobby',
+      start: 'top 30%',
+      toggleActions: 'play none none reverse',
+      markers:true
+    }
+  })
+  .to(imgs[0], { x: -550, y: -200, duration: 1 }, 0)
+  .to(imgs[1], { x: 400, y: -200, duration: 1 }, 0)
+  .to(imgs[2], { x: -450, y: 150, duration: 1 }, 0)
+  .to(imgs[3], { x: 350, y: 150, duration: 1 }, 0)
+  .to(imgs[4], { x: -100, y: -350, duration: 1 }, 0)
+  .to(imgs[5], { x: 50, y: 250, duration: 1 }, 0)
+  .to(imgs[6], { x: -200, y: 250, duration: 1 }, 0);
+
+
+}
+
+// skill-mouse
+function skillMouse() {
+  const grid = document.querySelector('.skill-grid');
+const glow = document.querySelector('.cursor-glow');
+
+grid.addEventListener('mousemove', (e) => {
+  const rect = grid.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+
+  glow.style.left = `${x}px`;
+  glow.style.top = `${y}px`;
+  glow.style.opacity = 1;
 });
 
+grid.addEventListener('mouseleave', () => {
+  glow.style.opacity = 0;
+});
+}
 
+function particle(){
+  const canvas = document.getElementById('starCanvas');
+const ctx = canvas.getContext('2d');
+let stars = [];
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+document.addEventListener('mousemove', (e) => {
+  for (let i = 0; i < 3; i++) {
+    stars.push({
+      x: e.clientX,
+      y: e.clientY,
+      radius: Math.random() * 1.5 + 0.5,
+      dx: (Math.random() - 0.5) * 1.5,
+      dy: (Math.random() - 0.5) * 1.5,
+      life: 80
+    });
+  }
+});
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  stars.forEach((star, index) => {
+    star.x += star.dx;
+    star.y += star.dy;
+    star.life--;
+
+    ctx.beginPath();
+    ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255, 255, 255, ${star.life / 80})`;
+    ctx.shadowColor = '#fff';
+    ctx.shadowBlur = 8;
+    ctx.fill();
+
+    if (star.life <= 0) stars.splice(index, 1);
+  });
+
+  requestAnimationFrame(animate);
+}
+animate();
+
+
+
+}

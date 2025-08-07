@@ -17,19 +17,19 @@ button:focus {outline: none}
 #starCanvas.active {opacity: 1;}
 
 body {background: #0D0D0D; color: #fff; font-family: 'Pretendard';}
-.wrap {position: relative; margin: 0 auto; letter-spacing: -2%;}
+.wrap {position: relative; margin: 0 auto; letter-spacing: -2%; overflow: hidden;}
 .en {font-family: "PP Editorial New Ultralight";}
 
 
-.inner {width: calc(100% - 340px); margin: 0 auto;}
+.inner {width: calc(100% - 340px); margin: 0 auto; overflow: hidden;}
 .black-section {background: #0D0D0D; height: 100vh;}
 
 
-header {position: fixed;  width: 100%;}
+header {position: fixed;  width: 100%; transition: all 0.5s; z-index: 1000;}
 header.hide {transform: translateY(-100%);}
 header.show {transform: translateY(0);}
 
-header .header-box {padding: 20px; box-sizing: border-box; display: flex; justify-content: flex-end; gap: 10px;}
+header .header-box {width: 28%; float: right; margin-top: 10px; padding: 15px; box-sizing: border-box; display: flex; justify-content: center; gap: 10px; background: rgba(221, 221, 221, 0.5); border-radius: 50px;}
 header .header-box a{padding: 5px; font-size: 18px; color: #0D0D0D;}
 
 /* header 스플리팅 */
@@ -42,102 +42,172 @@ header .header-box a{padding: 5px; font-size: 18px; color: #0D0D0D;}
 
 
 
-
-
-
 .intro { width: 100%; height: 100vh; background: #fff; }
-.intro .inner { margin-top: auto;
-display: flex; justify-content: center; align-items: center;
+.intro .inner { margin-top: auto; display: flex; justify-content: center; align-items: center;
 flex-direction: column; padding-top: 50px;}
   /* margin-top: auto를 준 자식 요소는 남는 공간을 위로 밀어내서 아래쪽에 위치하게 돼. */
 .intro .intro-title span {display: block; text-align: center; font-size: 50px; color: #0D0D0D; line-height: 1.2;}
 .intro .intro-title span.en {font-size: 60px; font-family: "PP Editorial New";}
 
+/* 이미지 스택 */
+.stack {position: relative; width: 350px; height: 400px;}
 
+.stack img {position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 100%; border-radius: 20px; transition: all 0.8s ease; opacity: 0;}
+.stack img:nth-child(1) {z-index: 1; transform: translate(-50%, -50%) rotate(-10deg) translateY(200px); transition-delay: 0.3s;}
+.stack img:nth-child(2) {z-index: 2; transform: translate(-50%, -50%) rotate(10deg) translateY(500px); transition-delay: 0.5s;}
+.stack img:nth-child(3) {z-index: 3; transform: translate(-50%, -50%) rotate(0deg) translateY(700px); transition-delay: 0.7s;}
+.stack img.motion:nth-child(1) {transform: translate(-50%, -50%) rotate(-10deg) translateY(0px); opacity: 1; transition-delay: 0.3s;}
+.stack img.motion:nth-child(2) {transform: translate(-50%, -50%) rotate(10deg) translateY(0px); opacity: 1; transition-delay: 0.5s;}
+.stack img.motion:nth-child(3) {transform: translate(-50%, -50%) rotate(0deg) translateY(0px); opacity: 1; transition-delay: 0.7s;}
 
-.stack {
-  position: relative;
-  width: 350px;
-  height: 400px;
-}
-
-.stack img {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  border-radius: 20px;
-  transition: all 0.8s ease;
-  opacity: 0;
-}
-
-.stack img:nth-child(1) {
-  z-index: 1;
-  transform: translate(-50%, -50%) rotate(-10deg) translateY(200px);
-  transition-delay: 0.3s;
-}
-.stack img:nth-child(2) {
-  z-index: 2;
-  transform: translate(-50%, -50%) rotate(10deg) translateY(500px);
-  transition-delay: 0.5s;
-}
-.stack img:nth-child(3) {
-  z-index: 3;
-  transform: translate(-50%, -50%) rotate(0deg) translateY(700px);
-  transition-delay: 0.7s;
-}
-
-.stack img.motion:nth-child(1) {
-  transform: translate(-50%, -50%) rotate(-10deg) translateY(0px);
-  opacity: 1; transition-delay: 0.3s;
-}
-.stack img.motion:nth-child(2) {
-  transform: translate(-50%, -50%) rotate(10deg) translateY(0px);
-  opacity: 1; transition-delay: 0.5s;
-}
-.stack img.motion:nth-child(3) {
-  transform: translate(-50%, -50%) rotate(0deg) translateY(0px);
-  opacity: 1; transition-delay: 0.7s;
-}
-
-
-
-
-
+/* intro 스플리팅 */
 .intro .intro-text {color: #0D0D0D; font-size: 300px; text-align: center;}
-.intro-text .char {
-  display: inline-block;
-  position: relative;
-  color: transparent;
-  overflow: hidden;
+.intro-text .char {display: inline-block; position: relative; color: transparent; overflow: hidden;}
+.intro-text .char::before, .intro-text .char::after {content: attr(data-char); position: absolute; top: 0; left: 0; color: #0D0D0D; transition: transform 0.5s ease, opacity 0.35s ease; transition-delay: calc(30ms * var(--char-index));}
+.intro-text .char::before {transform: translateY(100%); opacity: 0;}
+.intro-text .char::after {transform: translateY(0); opacity: 1;}
+.intro-text.active .char::before {transform: translateY(0); opacity: 1;}
+.intro-text.active .char::after {transform: translateY(-100%); opacity: 0;}
+
+
+/* video-section */
+.myvideo {width: 100%; height: 100vh; position: relative; background: #fff;}
+.myvideo .videoWrap {overflow: hidden;}
+.myvideo .videoWrap video {width: 100%; height: 100vh; object-fit: cover; position: absolute; left: 0; top: 0; filter: brightness(80%);}
+.myvideo .videoWrap .title {position: absolute; width: 100%; text-align: center; left: 0; top: 50%; transform: translateY(-50%); color: #fff;}
+.myvideo .videoWrap .title h2 {font-size: 100px; font-weight: 400; line-height: 1.2; letter-spacing: -1px;}
+
+
+/* overview */
+.overview {width: 100%; height: 100vh; background: #FFF; padding: 60px 0; display: flex; align-items: center;}
+.overview .inner {width: 70%; display: flex; justify-content: space-between; align-items: center; gap: 60px;}
+.overview-img {width: 600px; height: auto; border-radius: 30px; overflow: hidden;}
+.overview-img img {width: 100%; height: 100%;}
+
+.overview-text { width: 30%; display: flex; flex-direction: column; gap: 45px;}
+.overview-text .title {color: #0D0D0D; font-size: 20px; line-height: 1.8;}
+.overview-text .title span {font-size: 30px; font-weight: 500; display: inline-block; margin-top: 10px;}
+
+.overview-text .information {display: flex; flex-direction: column; gap: 30px;}
+.overview-text .information > li {display: flex; justify-content: flex-start; gap: 40px; align-items: flex-start; color: #0D0D0D;}
+
+.information .information-tit {min-width: 80px; font-size: 18px; font-weight: 500; white-space: nowrap;}
+.information .information-sub {padding-left: 20px; border-left: 1px solid #ccc;}
+.information .information-sub li {margin-bottom: 8px; font-size: 15px; line-height: 1.5;}
+
+.information .skill-info {display: block !important;}
+.skill-info .information-tit {margin-bottom: 20px;}
+.skill-info .skill-icons {display: flex; gap: 12px;}
+.skill-info .skill-icons .img {width: 50px; height: 50px; border-radius: 10px; overflow: hidden;}
+.skill-info .skill-icons .img img {width: 100%; height: 100%;}
+
+
+/* strength */
+.strength-section { display: flex; position: relative; height: 100vh; width: 100vw; overflow: hidden; }
+.strength-left { background: #fff; color: #0D0D0D; width: 100vw; height: 100%; display: flex; flex-direction: column; gap: 20px; justify-content: center; align-items: center; z-index: 2; transition: opacity 0.3s ease; }
+.strength-left p { font-size: 80px; font-weight: 500; }
+.strength-left span { font-size: 18px; color: #8B8B8B; }
+
+.strength-right { position: absolute; top: 0; right: 5%; width: 30vw; height: 90%; background: #0D0D0D; display: flex; justify-content: center; align-items: center; z-index: 1; }
+.strength-texts { position: relative; width: 50%; }
+.strength-text { position: absolute; top: 30%; left: 0%; transform: translate(0%, 50px); color: #fff; opacity: 0; z-index: 5; }
+.strength-text p { font-size: 80px; margin-bottom: 20px; }
+.strength-text span { font-size: 18px; color: #8B8B8B; }
+.strength-text:first-child { opacity: 0; transform: translate(0%, 0); }
+
+/* hobby-section*/
+.hobby {position: relative; width: 100%; height: 100vh; display: flex; justify-content: center; align-items: center;}
+.hobby .section-title {position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 2;}
+.hobby .section-title h2 {font-size: 40px; margin-bottom: 20px;}
+.hobby .section-title span {font-size: 20px; color: #ccc; line-height: 1.4;}
+
+.hobby-images {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
-.intro-text .char::before,
-.intro-text .char::after {
-  content: attr(data-char);
+
+.hobby-img {
   position: absolute;
   top: 0;
   left: 0;
-  color: #0D0D0D;
-  opacity: 1;
-  transition: transform 0.35s ease, opacity 0.35s ease;
-  transition-delay: calc(30ms * var(--char-index));
+  width: 200px;
+  height: 200px; overflow: hidden;
+  object-fit: cover;
+  border-radius: 12px;
+  opacity: 0;
+}
+.hobby-img img {width: 100%; height: 100%;}
+
+
+
+/* skill-section */
+.skill-section {width: 100%; height: 100vh;}
+.skill-grid {position: relative;  overflow: hidden;
+  gap: 3px;
+}
+.skill-grid .grid {width: 100%; display: flex; gap: 3px; margin-bottom: 3px;}
+
+.skill-grid .top-box {
+  transform: translateX(-50px);
 }
 
-.intro-text .char::before {
-  transform: translateY(100%);
+.skill-grid .middle-box {
+  transform: translateX(50px);
 }
 
-.intro-text .char::after {
-  transform: translateY(0);
+.skill-grid .bottom-box {
+  transform: translateX(-50px);
 }
 
-/* 스크롤 트리거 시 효과 적용 */
-.intro-text.active .char::before {
-  transform: translateY(0);
-  opacity: 1;
+
+.box {width: 33%; font-size: 40px;
+  background: #111; overflow: hidden;
+  color: white;
+  padding: 100px 20px;
+  text-align: center;
+  border: 2px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+  z-index: 1;
 }
 
-.intro-text.active .char::after {
-  transform: translateY(-100%);
+/* 마우스 따라가는 네온 glow */
+.cursor-glow {
+  position: absolute;
+  width: 150px;
+  height: 150px; border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.05s linear;
+
+  background: radial-gradient(circle, #2F71DF 100%, transparent 70%);
+  background-repeat: no-repeat;
+
+  /* 💡 네온 강조 */
+  box-shadow:
+    0 0 10px #2F71DF,
+    0 0 20px #2F71DF,
+    0 0 40px #2F71DF,
+    0 0 80px #2F71DF;
+
+  filter:
+    blur(1px)
+    brightness(1.5)
+    drop-shadow(0 0 6px #2F71DF)
+    drop-shadow(0 0 12px #2F71DF)
+    drop-shadow(0 0 24px #2F71DF)
+    drop-shadow(0 0 50px #2F71DF);
 }
+#starCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 50; /* cursor-glow 아래 or 원하는 곳에 */
+}
+
