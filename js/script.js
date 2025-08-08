@@ -1,3 +1,6 @@
+
+gsap.registerPlugin(ScrollTrigger, TextPlugin, MotionPathPlugin);
+
 window.addEventListener('DOMContentLoaded', () => {
     preventAnchorBounce();
     initScrolla();
@@ -5,8 +8,7 @@ window.addEventListener('DOMContentLoaded', () => {
     headerScrollEvent();
     startStarCanvasAnimation();
     observeBlackSection();
-
-    gsap.registerPlugin(ScrollTrigger, TextPlugin, MotionPathPlugin);
+    svg();
     initIntroTextScrollTrigger();
     VideoSectionScrollTrigger();
     strengthScrollAnimation();
@@ -16,6 +18,10 @@ window.addEventListener('DOMContentLoaded', () => {
     marquee();
 });
 
+
+document.querySelectorAll('path').forEach((p, i) => {
+  console.log(`#svgAni${i.toString().padStart(3, '0')} 길이:`, p.getTotalLength());
+});
 
 // 1. a[href="#"] 스크롤 튕김 방지
 function preventAnchorBounce() {
@@ -54,6 +60,14 @@ function headerScrollEvent() {
     });
 }
 
+function svg() {
+  $(function(){
+    $('.svgAni path').each(function(i, path){
+      const len = path.getTotalLength();
+      console.log(`#svgAni0${i} 길이:`, len);
+    });
+  });
+}
 
 // 3. 캔버스 리사이즈
 function resizeCanvas(canvas, stars) {
@@ -213,7 +227,7 @@ function strengthScrollAnimation() {
   tl.to(".strength-text:nth-child(1)", {
     opacity: 0,
     duration: 0.3
-  }, "<+=2.0"); // 화면 줄이기 시작 후 1초 후에
+  }, "<+=2.5"); // 화면 줄이기 시작 후 1초 후에
 
   tl.to(".strength-text:nth-child(2)", {
     opacity: 1,
@@ -243,6 +257,12 @@ function strengthScrollAnimation() {
     opacity: 0,
     duration: 1
   }, "<");
+
+  tl.to(".strength-section, .strength-right",{
+    backgroundColor: "#0D0D0D", // 검정
+    duration: 1
+  }, "<"); // 마지막 텍스트 사라질 타이밍과 맞춰
+
 }
 
 function hobbyImages() {
@@ -313,39 +333,67 @@ function skillCounting() {
 }
 
 function marquee() {
-  gsap.to(".floating-text", {
+  const track = document.querySelector(".marquee-track");
+  if (!track) return;
+
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+  const trackWidth = track.offsetWidth || 1000;
+
+  // ✅ 1. 등장 애니메이션 + pin 구간에서 끝나면 해제
+  const tl = gsap.timeline({
     scrollTrigger: {
-      trigger: ".marquee-section",
-      start: "top center",
-      end: "bottom top",
+      trigger: ".marquee-intro",
+      start: "top top",
+      end: "+=200%", // pin 구간
       scrub: 1,
-      markers: true
-    },
-    motionPath: {
-      path: "#gPath",
-      align: "#gPath",
-      alignOrigin: [0.5, 0.5],
-      autoRotate: false
-    },
-    opacity: 1,
-    duration: 3,
-    ease: "power2.out"
+      pin: true,
+      markers: true,
+      onLeave: () => {
+        // ✅ pin 해제 후 중앙 위치 유지하면서 마퀴 시작
+        gsap.set(track, {
+          clearProps: "all",
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          xPercent: 0,
+          yPercent: 0,
+        });
+
+        gsap.to(track, {
+          x: `-=${trackWidth}px`,
+          duration: 10,
+          ease: "linear",
+          repeat: -1,
+          modifiers: {
+            x: gsap.utils.unitize(x => parseFloat(x) % trackWidth)
+          }
+        });
+      }
+    }
   });
 
-  ScrollTrigger.create({
-    trigger: ".cloneCoding-section",
-    start: "top center",
-    end: "bottom center",
-    onEnter: () => {
-      document.querySelector(".floating-text").classList.add("marquee");
-    },
-    onLeaveBack: () => {
-      document.querySelector(".floating-text").classList.remove("marquee");
+  // ✅ 초기 위치 설정 (오른쪽 하단)
+  gsap.set(track, {
+    opacity: 0,
+    x: vw,
+    y: vh 
+  });
+
+  // ✅ motionPath로 중앙까지 꺾이듯 이동
+  tl.to(track, {
+    opacity: 1,
+    duration: 3,
+    ease: "power1.inOut",
+    motionPath: {
+      path: [
+        { x: vw,     y: vh },                 // 시작점
+        { x: vw * 0.8, y: vh * 0.6 },         // 부드럽게 꺾이기
+        { x: vw * 0.6, y: vh * 0.4 },
+        { x: vw * 0.5, y: vh * 0.5 }          // 중앙 도착
+      ],
+      curviness: 3,
+      autoRotate: false
     }
   });
 }
-
-window.addEventListener("load", marquee);
-
-
-
