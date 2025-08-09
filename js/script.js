@@ -18,10 +18,14 @@ window.addEventListener('DOMContentLoaded', () => {
     marquee();
     cloneCodingList();
     workIntro();
-    workList();
-    slick();
 });
 
+window.addEventListener('load', () => {
+  workList();      // ← 여기서 전역 scrollTween 세팅
+  slick();
+  nuvieVideo();    // ← workList 이후 호출 필수
+  attachImageCursor();
+});
 
 document.querySelectorAll('path').forEach((p, i) => {
   console.log(`#svgAni${i.toString().padStart(3, '0')} 길이:`, p.getTotalLength());
@@ -185,18 +189,24 @@ function initIntroTextScrollTrigger() {
 
 // video-section
 function VideoSectionScrollTrigger() {
+  const wrap = document.querySelector('.videoWrap');
+  const vid  = document.querySelector('.videoWrap video');
+  if (!wrap || !vid) return;  // ✅ 가드
+
   gsap.timeline({
     scrollTrigger: {
-        trigger: '.myvideo',
-        start: 'top 50%',
-        end: 'center 50%',
-        scrub:2,
-        //markers:true
+      trigger: '.myvideo',
+      start: 'top 50%',
+      end: 'center 50%',
+      scrub: 2,
+      // markers:true
     }
-})
-.to('.videowrap', {backgroundColor:'#fff', color:'#0D0D0D', ease:'none', duration:5},0)
-.fromTo('.videoWrap video', {'clip-path': 'inset(60% round 30%)'},
-    {'clip-path': 'inset(0% round 0%)', ease:'none', duration:10},0)
+  })
+  .to('.videoWrap', { backgroundColor:'#fff', color:'#0D0D0D', ease:'none', duration:5 }, 0)
+  .fromTo('.videoWrap video',
+    { 'clip-path': 'inset(60% round 30%)' },
+    { 'clip-path': 'inset(0% round 0%)', ease:'none', duration:10 }, 0
+  );
 }
 
 
@@ -562,16 +572,15 @@ function workIntro() {
 }
 
 
-function workList() {
-  gsap.registerPlugin(ScrollTrigger);
+let workScrollTween = null; // ✅ 전역으로
 
+function workList() {
   const list   = document.querySelector(".work-list");
   const track  = document.querySelector(".work-track");
   const slides = gsap.utils.toArray(".work-slide");
   if (!list || !track || !slides.length) return;
 
-  // 1) 가로 이동 트윈을 변수로 저장
-  const scrollTween = gsap.to(slides, {
+  workScrollTween = gsap.to(slides, {
     xPercent: -100 * (slides.length - 1),
     ease: "none",
     scrollTrigger: {
@@ -584,17 +593,15 @@ function workList() {
     }
   });
 
-  // 2) 초기 색
-  gsap.set(list, {
-    backgroundColor: slides[0].dataset.bg || "#ffffff"
-  });
+  // 초기 색
+  gsap.set(list, { backgroundColor: slides[0].dataset.bg || "#ffffff" });
   list.style.setProperty("--ink", slides[0].dataset.ink || "#0D0D0D");
 
-  // 3) 각 슬라이드 진입 시 배경/글자색 전환
+  // 슬라이드 진입 시 색 전환
   slides.forEach((slide) => {
     ScrollTrigger.create({
       trigger: slide,
-      containerAnimation: scrollTween,
+      containerAnimation: workScrollTween,     // ✅ 전역 트윈 사용
       start: "left center",
       end: "right center",
       onEnter: () => setColors(slide),
@@ -603,15 +610,11 @@ function workList() {
   });
 
   function setColors(slide) {
-    gsap.to(list, {
-      backgroundColor: slide.dataset.bg || "#000",
-      duration: 0.6,
-      ease: "power1.out"
-    });
-    // CSS 변수(color)는 보통 부드럽게 트윈이 안되니 즉시 세팅 권장
+    gsap.to(list, { backgroundColor: slide.dataset.bg || "#000", duration: 0.6, ease: "power1.out" });
     list.style.setProperty("--ink", slide.dataset.ink || "#fff");
   }
 }
+
 
  function slick() {
   $('.work-slick').not('.slick-initialized').slick({
@@ -621,7 +624,7 @@ function workList() {
     dots: false,
     arrows: false,
     autoplay: true,
-    autoplaySpeed: 1500,
+    autoplaySpeed: 1000,
     speed: 500,
     cssEase: 'ease',
     pauseOnHover: true,
@@ -629,3 +632,53 @@ function workList() {
     adaptiveHeight: false
   });
 };
+
+function nuvieVideo() {
+  const video = document.querySelector('.slide3 .work-video');
+  if (!video || !workScrollTween) return;
+
+  // 모바일 자동재생 보장용 속성(HTML에도 넣어두면 더 좋음)
+  video.muted = true; video.playsInline = true;
+
+  ScrollTrigger.create({
+    trigger: '.slide3',
+    containerAnimation: workScrollTween,   // ✅ 정의된 트윈
+    start: 'left center',
+    end: 'right center',
+    onEnter:     () => video.play(),
+    onEnterBack: () => video.play(),
+    onLeave:     () => video.pause(),
+    onLeaveBack: () => video.pause()
+  });
+}
+
+function attachImageCursor() {
+  document.querySelectorAll('.work-img').forEach(box => {
+    if (box.dataset.cursorInit) return; // 중복 방지
+    box.dataset.cursorInit = '1';
+
+    const cursor = document.createElement('div');
+    cursor.className = 'img-cursor';
+    cursor.textContent = 'Click!';
+    box.appendChild(cursor);
+
+    box.addEventListener('mouseenter', () => {
+      box.classList.add('cursor-visible');
+    });
+
+    box.addEventListener('mousemove', (e) => {
+      const r = box.getBoundingClientRect();
+      const x = e.clientX - r.left;
+      const y = e.clientY - r.top;
+      cursor.style.left = x + 'px';
+      cursor.style.top  = y + 'px';
+    });
+
+    box.addEventListener('mouseleave', () => {
+      box.classList.remove('cursor-visible');
+    });
+
+    box.addEventListener('mousedown', () => cursor.classList.add('is-down'));
+    box.addEventListener('mouseup',   () => cursor.classList.remove('is-down'));
+  });
+}

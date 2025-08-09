@@ -262,46 +262,20 @@ filter: blur(1px) brightness(1.5) drop-shadow(0 0 6px #2F71DF) drop-shadow(0 0 1
 /* work-list */
 /* workintro */
 .work-intro {position: relative; height: 100vh; overflow: hidden; background: #fff;}
-.work-intro .intro_circle{
-  position:absolute;
-  top:50%; left:50%;
-  width:200vmax; height:200vmax; 
-  transform:translate(-50%,-50%) scale(1);
-  transform-origin:50% 50%;
-  border-radius:50%;
-  background:#0D0D0D;
-  z-index:1;
-  will-change:transform;
-}
+.work-intro .intro_circle{position:absolute; top:50%; left:50%; width:200vmax; height:200vmax; transform:translate(-50%,-50%) scale(1); transform-origin:50% 50%; border-radius:50%; background:#0D0D0D; z-index:1; will-change:transform;}
 
-.work-intro .textBox{
-  position:absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column; gap: 50px;
-  z-index:2;
-  color:#fff; /* 처음엔 원 위에 보이게 흰색 */
-}
+.work-intro .textBox{position:absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column; gap: 50px; z-index:2;color:#fff;}
 
 .work-intro .en{font-size: 200px;}
 .work-intro .intro-title{font-size: 20px;}
-
-
-
 
 
 :root { --brand:#2F71DF; --ink:#0D0D0D; --muted:#8B8B8B; }
 
 .work-list {position: relative; width: 100%; height: 100vh; background: #0D0D0D; margin-bottom: 1000px;}
 .work-list .pin-wrap {height:100vh; overflow:hidden; position:relative;}
-.work-track {
-  display:flex;
-  height:100%;
-  will-change: transform;
-}
-.work-slide {
-  flex: 0 0 calc(100vw); /* 화면 꽉 차게(좌우 패딩 제외) */
-  height: 100%;
-  display:flex;
-  align-items:center; background: transparent;
-}
+.work-track {display:flex; height:100%; will-change: transform;}
+.work-slide {flex: 0 0 calc(100vw); /* 화면 꽉 차게(좌우 패딩 제외) */ height: 100%; display:flex;align-items:center; background: transparent;}
 
 .work-list .inner {position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);}
 .work-title { font-size: 100px; font-weight: 800; color: var(--ink); margin-bottom: 20px; }
@@ -309,7 +283,9 @@ filter: blur(1px) brightness(1.5) drop-shadow(0 0 6px #2F71DF) drop-shadow(0 0 1
 .work-box {width: 100%;  display: flex; justify-content: space-between;}
 
 /* 왼쪽 목업 이미지 */
-.work-img {width: 67%; border-radius: 18px; aspect-ratio: 16 / 9; position: relative; overflow: hidden;}
+.work-img {width: 67%; border-radius: 18px; aspect-ratio: 16 / 9; position: relative; overflow: hidden; }
+.work-img a img {cursor: none;}
+.work-img a img:hover {filter: brightness(70%);}
 .work-img > a {display: block; position: absolute; inset: 0;}
 .work-img > a img {width: 100%; height: 100%; object-fit: cover;}
 
@@ -348,28 +324,54 @@ filter: blur(1px) brightness(1.5) drop-shadow(0 0 6px #2F71DF) drop-shadow(0 0 1
 /* 기여도 바 */
 .skill-info .contribute { display:flex; flex-direction:column; gap:15px; width:61%;  border-radius: 10px;}
 
-.contribute .bar {
-  display:grid; grid-template-columns: 56px 1fr 44px;
-  align-items:center; gap:15px;
-}
+.contribute .bar {display:grid; grid-template-columns: 56px 1fr 44px; align-items:center; gap:15px;}
 .bar-label { font-size:16px; color:#0D0D0D; }
-.bar-track {
-  height:10px; background:#bbb; border-radius:999px; overflow:hidden;
-}
-.bar-fill {
-  height:100%; width: var(--val, 0%);
-  background: #FF6200;
-  border-radius:inherit;
-}
+.bar-track {height:10px; background:#bbb; border-radius:999px; overflow:hidden;}
+.bar-fill {height:100%; width: var(--val, 0%); background: #FF6200; border-radius:inherit;}
 .slide2 .bar-fill {background: #2F71DF;}
 .slide3 .bar-fill {background: #F9C344;}
 .bar-val { font-size:12px; color:#0D0D0D; text-align:right; }
 
 
-.work-img .work-slick a { position: relative !important; inset: auto !important; display:block; height:100%;}
+.work-img .work-slick a { position: relative !important; inset: auto !important; display:block;height:100%;}
 .work-img .work-slick,
 .work-img .slick-list,
 .work-img .slick-track,
 .work-img .slick-slide { height:100%;}
 
 .work-img img {position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width:100%; height:100%; object-fit:cover; display:block; }
+
+.work-video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; cursor: none;}
+.work-video:hover {filter: brightness(70%);}
+
+/* 커스텀 커서(흰 원) */
+.work-img .img-cursor {
+  position: absolute;
+  left: 0; top: 0;
+  width: 160px; height: 160px;          /* 원 크기 */
+  border-radius: 50%;
+  background: #fff;
+  color: #0D0D0D; font-size: 20px;
+  display: grid; place-items: center;
+  font-weight: 700;
+  pointer-events: none;                  /* 클릭 막지 않기 */
+  z-index: 5;
+  transform: translate(-50%, -50%) scale(.6);
+  opacity: 0;
+  transition: opacity .18s ease, transform .18s ease;
+  box-shadow: 0 4px 24px rgba(0,0,0,.15);
+}
+/* 보이는 상태 */
+.work-img.cursor-visible .img-cursor {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+/* 클릭 눌렀을 때 살짝 작아짐 */
+.work-img .img-cursor.is-down {
+  transform: translate(-50%, -50%) scale(.9);
+}
+/* 터치 기기에서는 기본 커서 사용 */
+@media (hover: none) {
+  .work-img { cursor: auto; }
+  .work-img .img-cursor { display: none; }
+}
