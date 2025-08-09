@@ -17,6 +17,9 @@ window.addEventListener('DOMContentLoaded', () => {
     skillCounting();
     marquee();
     cloneCodingList();
+    workIntro();
+    workList();
+    slick();
 });
 
 
@@ -358,7 +361,7 @@ function marquee(){
       end: "+=200%",
       scrub: 1,
       pin: true,
-      markers: true,
+      //markers: true,
       onLeave: startMarquee
     }
   });
@@ -403,137 +406,226 @@ function marquee(){
 
 function cloneCodingList() {
   // 02.가로로 스크롤되기	
-            let list = gsap.utils.toArray('.coding ul li');
-            let scrollTween = gsap.to(list, {
-                xPercent: -100 * (list.length -1),
-                ease:'none',
-                scrollTrigger:{
-                    trigger:'.coding',
-                    pin:true,
-                    scrub:1,
-                    start:'center center',
-                    end:'300%',
-                    //markers:true
-                }
-            });
-            
-    
-    
-            // 03.imgBox모션
-            gsap.utils.toArray('.coding ul li .imgBox').forEach(function(imgBox){
-    
-                // 03-1 : imgBox가 커지게 -> imgBox가 화면 오른쪽에서 커지기 시작해서 중앙에서 끝
-                gsap.timeline({
-                    scrollTrigger:{
-                        trigger:imgBox,
-                        containerAnimation:scrollTween, //가로스크롤에서 트리거 시점을 잡아주려면 필수
-                        start:'center right', //가로스크롤에서 left는 top으로 간주 left가 0%, right가 100%
-                        end:'center center',
-                        scrub:true,
-                        //markers:true
-                    }
-                })
-                .to(imgBox, {'clip-path':'inset(0%)', ease:'none', duration:1},0)
-    
-    
-                // 03-2. imgBox작아지게 -> 화면 중앙에서 작아지기 시작해서 왼쪽에서 끝
-                gsap.timeline({
-                    scrollTrigger:{
-                        trigger: imgBox,
-                        containerAnimation: scrollTween,
-                        start:'center center',
-                        end:'center left',
-                        scrub:true,
-                        //markers:true
-                    }
-                })
-                .to(imgBox, {'clip-path':'inset(40%)', ease:'none', duration:1},0)
-                })
-            // imgBox 애니 끝
-    
-    
-            // 04.textBox모션
-            gsap.utils.toArray('.coding ul li .textBox').forEach(function(textBox){
-    
-                // 04-1 : textBox 애니 -> textBox가 화면 중앙에서 투명도 1, x축으로 이동
-                gsap.timeline({
-                    scrollTrigger:{
-                        trigger:textBox,
-                        containerAnimation:scrollTween, //가로스크롤에서 트리거 시점을 잡아주려면 필수
-                        start:'center 70%', //가로스크롤에서 right는 top으로 간주
-                        end:'center 40%',
-                        scrub:true,
-                        //markers:true
-                    }
-                })
-                .to(textBox, {opacity:1, x:-100},0)
-    
-    
-                // 04-2. textBox 애니 -> 화면 중앙에서 왼쪽으로 이동시 다시 투명도 0
-                gsap.timeline({
-                    scrollTrigger:{
-                        trigger: textBox,
-                        containerAnimation: scrollTween,
-                        start:'center 30%',
-                        end:'center 20%',
-                        scrub:true,
-                        //markers:true
-                    }
-                })
-                .to(textBox, {opacity:0},0)
-                
-            })
-            // textBox 애니 끝
-            gsap.utils.toArray('.coding ul li .btnBox').forEach(function(btnBox){
-                // 04-1 : textBox 애니 -> textBox가 화면 중앙에서 투명도 1, x축으로 이동
-                gsap.timeline({
-                    scrollTrigger:{
-                        trigger:btnBox,
-                        containerAnimation:scrollTween, //가로스크롤에서 트리거 시점을 잡아주려면 필수
-                        start:'center 70%', //가로스크롤에서 right는 top으로 간주
-                        end:'center 40%',
-                        scrub:true,
-                        //markers:true
-                    }
-                })
-                .to(btnBox, {opacity:1, x:-100},0)
-    
-    
-                // 04-2. textBox 애니 -> 화면 중앙에서 왼쪽으로 이동시 다시 투명도 0
-                gsap.timeline({
-                    scrollTrigger:{
-                        trigger: btnBox,
-                        containerAnimation: scrollTween,
-                        start:'center 50%',
-                        end:'center 0%',
-                        scrub:true,
-                        //
-                        // markers:true
-                    }
-                })
-                .to(btnBox, {opacity:0},0)
-                
-            })
-    
-    
-            // 05.counter text변경
-            gsap.utils.toArray('.num').forEach(function(text){
-                let num = text.getAttribute('data-text');
-                let counter = document.querySelector('.counter .now');
-    
-                ScrollTrigger.create({
-                    trigger: text,
-                    start:'0 center',
-                    end:'100% center',
-                    scrub:true,
-                    containerAnimation:scrollTween,
-                    //markers:true,
-                    onEnter:self => counter.innerText = num,
-                    //스크롤 위치가 start를 지나 앞으로 이동할 때 .counter .now에 적어준다.(마우스 휠 아래로 스크롤)
-                    onEnterBack:self => counter.innerText = num
-                    //스크롤 위치가 end를 지나 뒤로 이동할 때 self는 window객체 자신을 반환. (마우스 휠 위로 스크롤)
-                })
-                
-                })
+  let list = gsap.utils.toArray('.cloneCoding-section ul li');
+  let scrollTween = gsap.to(list, {
+      xPercent: -100 * (list.length -1),
+      ease:'none',
+      scrollTrigger:{
+          trigger:'.cloneCoding-section',
+          pin:true,
+          scrub:1,
+          start:'top 10%',
+          end:'300%',
+          //markers:true
+      }
+  });
+  
+
+
+  // 03.imgBox모션
+  gsap.utils.toArray('.cloneCoding-section ul li .imgBox').forEach(function(imgBox){
+
+      // 03-1 : imgBox가 커지게 -> imgBox가 화면 오른쪽에서 커지기 시작해서 중앙에서 끝
+      gsap.timeline({
+          scrollTrigger:{
+              trigger:imgBox,
+              containerAnimation:scrollTween, //가로스크롤에서 트리거 시점을 잡아주려면 필수
+              start:'center right', //가로스크롤에서 left는 top으로 간주 left가 0%, right가 100%
+              end:'center center',
+              scrub:true,
+              //markers:true
+          }
+      })
+      .to(imgBox, {'clip-path':'inset(0%)', ease:'none', duration:1},0)
+
+
+      // 03-2. imgBox작아지게 -> 화면 중앙에서 작아지기 시작해서 왼쪽에서 끝
+      gsap.timeline({
+          scrollTrigger:{
+              trigger: imgBox,
+              containerAnimation: scrollTween,
+              start:'center center',
+              end:'center left',
+              scrub:true,
+              //markers:true
+          }
+      })
+      .to(imgBox, {'clip-path':'inset(40%)', ease:'none', duration:1},0)
+      })
+  // imgBox 애니 끝
+
+
+  // 04.textBox모션
+  gsap.utils.toArray('.cloneCoding-section ul li .textBox').forEach(function(textBox){
+
+      // 04-1 : textBox 애니 -> textBox가 화면 중앙에서 투명도 1, x축으로 이동
+      gsap.timeline({
+          scrollTrigger:{
+              trigger:textBox,
+              containerAnimation:scrollTween, //가로스크롤에서 트리거 시점을 잡아주려면 필수
+              start:'center 70%', //가로스크롤에서 right는 top으로 간주
+              end:'center 40%',
+              scrub:true,
+              //markers:true
+          }
+      })
+      .to(textBox, {opacity:1, x:-100},0)
+
+
+      // 04-2. textBox 애니 -> 화면 중앙에서 왼쪽으로 이동시 다시 투명도 0
+      gsap.timeline({
+          scrollTrigger:{
+              trigger: textBox,
+              containerAnimation: scrollTween,
+              start:'center 30%',
+              end:'center 20%',
+              scrub:true,
+              //markers:true
+          }
+      })
+      .to(textBox, {opacity:0},0)
+      
+  })
+  // textBox 애니 끝
+  gsap.utils.toArray('.cloneCoding-section ul li .btnBox').forEach(function(btnBox){
+      // 04-1 : textBox 애니 -> textBox가 화면 중앙에서 투명도 1, x축으로 이동
+      gsap.timeline({
+          scrollTrigger:{
+              trigger:btnBox,
+              containerAnimation:scrollTween, //가로스크롤에서 트리거 시점을 잡아주려면 필수
+              start:'center 70%', //가로스크롤에서 right는 top으로 간주
+              end:'center 40%',
+              scrub:true,
+              //markers:true
+          }
+      })
+      .to(btnBox, {opacity:1, x:-100},0)
+
+
+      // 04-2. textBox 애니 -> 화면 중앙에서 왼쪽으로 이동시 다시 투명도 0
+      gsap.timeline({
+          scrollTrigger:{
+              trigger: btnBox,
+              containerAnimation: scrollTween,
+              start:'center 50%',
+              end:'center 0%',
+              scrub:true,
+              //
+              // markers:true
+          }
+      })
+      .to(btnBox, {opacity:0},0)
+      
+  })
+
+
+  // 05.counter text변경
+  gsap.utils.toArray('.num').forEach(function(text){
+      let num = text.getAttribute('data-text');
+      let counter = document.querySelector('.counter .now');
+
+      ScrollTrigger.create({
+          trigger: text,
+          start:'0 center',
+          end:'100% center',
+          scrub:true,
+          containerAnimation:scrollTween,
+          //markers:true,
+          onEnter:self => counter.innerText = num,
+          //스크롤 위치가 start를 지나 앞으로 이동할 때 .counter .now에 적어준다.(마우스 휠 아래로 스크롤)
+          onEnterBack:self => counter.innerText = num
+          //스크롤 위치가 end를 지나 뒤로 이동할 때 self는 window객체 자신을 반환. (마우스 휠 위로 스크롤)
+      })
+      
+      })
 }
             
+
+// work-intro
+function workIntro() {
+
+  const sec = document.querySelector(".work-intro");
+  const circle = sec.querySelector(".intro_circle");
+
+  const tl = gsap.timeline({
+    scrollTrigger:{
+      trigger: sec,
+      start: "top top",
+      end: "+=150%",
+      scrub: 1.2,
+      pin: true,
+      markers:true
+    }
+  });
+
+  tl.to(circle, {scale:0, duration:2.6, ease:"power1.inOut"}, ">+=0.3");
+}
+
+
+function workList() {
+  gsap.registerPlugin(ScrollTrigger);
+
+  const list   = document.querySelector(".work-list");
+  const track  = document.querySelector(".work-track");
+  const slides = gsap.utils.toArray(".work-slide");
+  if (!list || !track || !slides.length) return;
+
+  // 1) 가로 이동 트윈을 변수로 저장
+  const scrollTween = gsap.to(slides, {
+    xPercent: -100 * (slides.length - 1),
+    ease: "none",
+    scrollTrigger: {
+      trigger: list,
+      pin: true,
+      scrub: 1,
+      end: () => "+=" + (track.scrollWidth - document.documentElement.clientWidth),
+      invalidateOnRefresh: true
+      // ,markers:true
+    }
+  });
+
+  // 2) 초기 색
+  gsap.set(list, {
+    backgroundColor: slides[0].dataset.bg || "#ffffff"
+  });
+  list.style.setProperty("--ink", slides[0].dataset.ink || "#0D0D0D");
+
+  // 3) 각 슬라이드 진입 시 배경/글자색 전환
+  slides.forEach((slide) => {
+    ScrollTrigger.create({
+      trigger: slide,
+      containerAnimation: scrollTween,
+      start: "left center",
+      end: "right center",
+      onEnter: () => setColors(slide),
+      onEnterBack: () => setColors(slide)
+    });
+  });
+
+  function setColors(slide) {
+    gsap.to(list, {
+      backgroundColor: slide.dataset.bg || "#000",
+      duration: 0.6,
+      ease: "power1.out"
+    });
+    // CSS 변수(color)는 보통 부드럽게 트윈이 안되니 즉시 세팅 권장
+    list.style.setProperty("--ink", slide.dataset.ink || "#fff");
+  }
+}
+
+ function slick() {
+  $('.work-slick').not('.slick-initialized').slick({
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    infinite: true,
+    dots: false,
+    arrows: false,
+    autoplay: true,
+    autoplaySpeed: 1500,
+    speed: 500,
+    cssEase: 'ease',
+    pauseOnHover: true,
+    lazyLoad: 'ondemand',
+    adaptiveHeight: false
+  });
+};
