@@ -16,6 +16,7 @@ window.addEventListener('DOMContentLoaded', () => {
     skillMouse();
     skillCounting();
     marquee();
+    cloneCodingList();
 });
 
 
@@ -285,8 +286,6 @@ function hobbyImages() {
   .to(imgs[4], { x: -100, y: -350, duration: 1 }, 0)
   .to(imgs[5], { x: 50, y: 250, duration: 1 }, 0)
   .to(imgs[6], { x: -200, y: 250, duration: 1 }, 0);
-
-
 }
 
 // skill-mouse
@@ -332,68 +331,209 @@ function skillCounting() {
 });
 }
 
-function marquee() {
+function marquee(){
   const track = document.querySelector(".marquee-track");
   if (!track) return;
 
-  const vw = window.innerWidth;
-  const vh = window.innerHeight;
-  const trackWidth = track.offsetWidth || 1000;
+  const line  = track.querySelector(".intro-text2.warp");
+  const big   = document.querySelector("#bigCurve");
+  const squ   = document.querySelector("#squiggle");
+  const noise = document.querySelector("#noise");
+  const disp  = document.querySelector("#disp");
 
-  // ✅ 1. 등장 애니메이션 + pin 구간에서 끝나면 해제
+  const chars = track.querySelectorAll(".intro-text2 .char");
+  let trackWidth = track.offsetWidth || 1000;
+  addEventListener('resize', () => trackWidth = track.offsetWidth || 1000);
+
+  // 시작 상태
+  gsap.set(track,{ opacity:0, x: innerWidth, y: innerHeight });
+
+  // 글자 한글자씩 위로(원하면 유지, 아니면 제거)
+  gsap.set(chars, { opacity:0, y:i=>120+i*14, rotate:10, transformOrigin:"50% 100%" });
+
   const tl = gsap.timeline({
-    scrollTrigger: {
+    scrollTrigger:{
       trigger: ".marquee-intro",
-      start: "top top",
-      end: "+=200%", // pin 구간
+      start: "top 30%",
+      end: "+=200%",
       scrub: 1,
       pin: true,
       markers: true,
-      onLeave: () => {
-        // ✅ pin 해제 후 중앙 위치 유지하면서 마퀴 시작
-        gsap.set(track, {
-          clearProps: "all",
-          position: "fixed",
-          top: "50%",
-          left: "50%",
-          xPercent: 0,
-          yPercent: 0,
-        });
-
-        gsap.to(track, {
-          x: `-=${trackWidth}px`,
-          duration: 10,
-          ease: "linear",
-          repeat: -1,
-          modifiers: {
-            x: gsap.utils.unitize(x => parseFloat(x) % trackWidth)
-          }
-        });
-      }
+      onLeave: startMarquee
     }
   });
 
-  // ✅ 초기 위치 설정 (오른쪽 하단)
-  gsap.set(track, {
-    opacity: 0,
-    x: vw,
-    y: vh 
-  });
-
-  // ✅ motionPath로 중앙까지 꺾이듯 이동
+  // A) 큰 곡선 경로
   tl.to(track, {
     opacity: 1,
-    duration: 3,
-    ease: "power1.inOut",
-    motionPath: {
-      path: [
-        { x: vw,     y: vh },                 // 시작점
-        { x: vw * 0.8, y: vh * 0.6 },         // 부드럽게 꺾이기
-        { x: vw * 0.6, y: vh * 0.4 },
-        { x: vw * 0.5, y: vh * 0.5 }          // 중앙 도착
-      ],
-      curviness: 3,
-      autoRotate: false
-    }
-  });
+    duration: 2,
+    ease: "none",
+    motionPath: { path: big, align:false, autoRotate:false }
+  }, 0);
+
+  // 글자 등장(옵션)
+  if (chars.length){
+    tl.to(chars, { opacity:1, y:0, rotate:0, ease:"none", stagger:{ each:0.08 } }, 0);
+  }
+
+  // B) S자 + 왜곡 0으로 수렴
+  tl.to(track, {
+    duration: 0.8,
+    ease: "none",
+    motionPath: { path: squ, align:false, autoRotate:false }
+  }, ">-0.1");
+
+  tl.to(disp,  { attr:{ scale:0 },             duration:0.8, ease:"power2.out" }, "<");
+  tl.to(noise, { attr:{ baseFrequency:0.004 },  duration:0.8, ease:"power2.out" }, "<");
+  tl.set(line, { filter:"none" }, ">+0.05");
+
+  function startMarquee(){
+    gsap.set(track, { clearProps:"all", position:"fixed", top:"50%", left:"50%", xPercent:0, yPercent:0 });
+    gsap.to(track, {
+      x: `-=${trackWidth}px`,
+      duration: 10,
+      ease: "linear",
+      repeat: -1,
+      modifiers: { x: gsap.utils.unitize(v => parseFloat(v) % trackWidth) }
+    });
+  }
 }
+
+
+
+function cloneCodingList() {
+  // 02.가로로 스크롤되기	
+            let list = gsap.utils.toArray('.coding ul li');
+            let scrollTween = gsap.to(list, {
+                xPercent: -100 * (list.length -1),
+                ease:'none',
+                scrollTrigger:{
+                    trigger:'.coding',
+                    pin:true,
+                    scrub:1,
+                    start:'center center',
+                    end:'300%',
+                    //markers:true
+                }
+            });
+            
+    
+    
+            // 03.imgBox모션
+            gsap.utils.toArray('.coding ul li .imgBox').forEach(function(imgBox){
+    
+                // 03-1 : imgBox가 커지게 -> imgBox가 화면 오른쪽에서 커지기 시작해서 중앙에서 끝
+                gsap.timeline({
+                    scrollTrigger:{
+                        trigger:imgBox,
+                        containerAnimation:scrollTween, //가로스크롤에서 트리거 시점을 잡아주려면 필수
+                        start:'center right', //가로스크롤에서 left는 top으로 간주 left가 0%, right가 100%
+                        end:'center center',
+                        scrub:true,
+                        //markers:true
+                    }
+                })
+                .to(imgBox, {'clip-path':'inset(0%)', ease:'none', duration:1},0)
+    
+    
+                // 03-2. imgBox작아지게 -> 화면 중앙에서 작아지기 시작해서 왼쪽에서 끝
+                gsap.timeline({
+                    scrollTrigger:{
+                        trigger: imgBox,
+                        containerAnimation: scrollTween,
+                        start:'center center',
+                        end:'center left',
+                        scrub:true,
+                        //markers:true
+                    }
+                })
+                .to(imgBox, {'clip-path':'inset(40%)', ease:'none', duration:1},0)
+                })
+            // imgBox 애니 끝
+    
+    
+            // 04.textBox모션
+            gsap.utils.toArray('.coding ul li .textBox').forEach(function(textBox){
+    
+                // 04-1 : textBox 애니 -> textBox가 화면 중앙에서 투명도 1, x축으로 이동
+                gsap.timeline({
+                    scrollTrigger:{
+                        trigger:textBox,
+                        containerAnimation:scrollTween, //가로스크롤에서 트리거 시점을 잡아주려면 필수
+                        start:'center 70%', //가로스크롤에서 right는 top으로 간주
+                        end:'center 40%',
+                        scrub:true,
+                        //markers:true
+                    }
+                })
+                .to(textBox, {opacity:1, x:-100},0)
+    
+    
+                // 04-2. textBox 애니 -> 화면 중앙에서 왼쪽으로 이동시 다시 투명도 0
+                gsap.timeline({
+                    scrollTrigger:{
+                        trigger: textBox,
+                        containerAnimation: scrollTween,
+                        start:'center 30%',
+                        end:'center 20%',
+                        scrub:true,
+                        //markers:true
+                    }
+                })
+                .to(textBox, {opacity:0},0)
+                
+            })
+            // textBox 애니 끝
+            gsap.utils.toArray('.coding ul li .btnBox').forEach(function(btnBox){
+                // 04-1 : textBox 애니 -> textBox가 화면 중앙에서 투명도 1, x축으로 이동
+                gsap.timeline({
+                    scrollTrigger:{
+                        trigger:btnBox,
+                        containerAnimation:scrollTween, //가로스크롤에서 트리거 시점을 잡아주려면 필수
+                        start:'center 70%', //가로스크롤에서 right는 top으로 간주
+                        end:'center 40%',
+                        scrub:true,
+                        //markers:true
+                    }
+                })
+                .to(btnBox, {opacity:1, x:-100},0)
+    
+    
+                // 04-2. textBox 애니 -> 화면 중앙에서 왼쪽으로 이동시 다시 투명도 0
+                gsap.timeline({
+                    scrollTrigger:{
+                        trigger: btnBox,
+                        containerAnimation: scrollTween,
+                        start:'center 50%',
+                        end:'center 0%',
+                        scrub:true,
+                        //
+                        // markers:true
+                    }
+                })
+                .to(btnBox, {opacity:0},0)
+                
+            })
+    
+    
+            // 05.counter text변경
+            gsap.utils.toArray('.num').forEach(function(text){
+                let num = text.getAttribute('data-text');
+                let counter = document.querySelector('.counter .now');
+    
+                ScrollTrigger.create({
+                    trigger: text,
+                    start:'0 center',
+                    end:'100% center',
+                    scrub:true,
+                    containerAnimation:scrollTween,
+                    //markers:true,
+                    onEnter:self => counter.innerText = num,
+                    //스크롤 위치가 start를 지나 앞으로 이동할 때 .counter .now에 적어준다.(마우스 휠 아래로 스크롤)
+                    onEnterBack:self => counter.innerText = num
+                    //스크롤 위치가 end를 지나 뒤로 이동할 때 self는 window객체 자신을 반환. (마우스 휠 위로 스크롤)
+                })
+                
+                })
+}
+            

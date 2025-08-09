@@ -103,7 +103,7 @@ flex-direction: column; padding-top: 50px;}
 
 
 .svgAni {
-  width: 700px; height: 700px;
+  width: 100px; 
   margin: 100px auto;
   display: block;
 }
@@ -195,19 +195,19 @@ path {
 .skill-section .section-title {position: absolute; left: 50%; top: 30%; transform: translate(-50%, -30%); text-align: center; z-index: 2;}
 .skill-section .section-title h2 {font-size: 60px; margin-bottom: 20px;}
 .skill-section .section-title span {font-size: 20px; color: #fff; line-height: 1.4;}
-.skill-grid {position: absolute; overflow: hidden; gap: 3px; width: 100%; bottom: 0;}
-.skill-grid .grid {width: 105%; display: flex; gap: 3px; margin-bottom: 3px;}
+.skill-grid {position: absolute; overflow: hidden; gap: 3px; width: 110%; bottom: 0;  z-index: 99 !important;}
+.skill-grid .grid { width: 105%; display: flex; gap: 3px; margin-bottom: 3px;}
 .skill-grid .middle-box {transform: translateX(100px);}
 .box {position: relative; font-size: 40px; flex: 1; background: #0D0D0D; color: #FFF; padding: 100px 0; text-align: center; border: 2px solid rgba(255, 255, 255, 0.02); box-sizing: border-box;}
 .box-info {position: absolute; width: 80%; height: auto; display: flex; flex-direction: column; gap: 5px;}
 .box-info p {font-weight: 600; text-align: left; margin-bottom: 20px;}
-.box-info .count-num {color: #2F71DF; font-size: 60px;}
-.box-info span {color: #2F71DF;}
+.box-info .count-num {color: #2F71DF; font-size: 70px;}
+.box-info span {color: #2F71DF; font-size: 70px;}
 .box-info .box-text {font-size: 16px; font-weight: normal; text-align: left; color: #8B8B8B;}
 .box-info.top {left: 50%; top: 10%; transform: translate(-50%, -10%);}
 .box-info.bottom {left: 50%; bottom: 0%; transform: translate(-50%, 0%);}
 
-.cursor-glow {position: absolute; width: 150px; height: 150px; border-radius: 50%; pointer-events: none; z-index: -1; transform: translate(-50%, -50%); opacity: 0; transition: opacity 0.2s ease, transform 0.05s linear; 
+.cursor-glow {position: absolute; width: 150px; height: 150px; border-radius: 50%; pointer-events: none; z-index: 1 ; transform: translate(-50%, -50%); opacity: 0; transition: opacity 0.2s ease, transform 0.05s linear; 
 background: radial-gradient(circle, #2F71DF 100%, transparent 70%); 
 background-repeat: no-repeat; 
 box-shadow: 
@@ -215,32 +215,45 @@ box-shadow:
 0 0 20px #2F71DF, 
 0 0 40px #2F71DF, 
 0 0 80px #2F71DF; 
-filter: blur(1px) brightness(1.5) drop-shadow(0 0 6px #2F71DF) drop-shadow(0 0 12px #2F71DF) drop-shadow(0 0 24px #2F71DF) drop-shadow(0 0 50px #2F71DF);}
+filter: blur(1px) brightness(1.5) drop-shadow(0 0 6px #2F71DF) drop-shadow(0 0 12px #2F71DF) drop-shadow(0 0 24px #2F71DF) drop-shadow(0 0 50px #2F71DF); z-index: -1;}
 
 
 /* marquee */
-
+.path-overlay{ position:fixed; inset:0; pointer-events:none; opacity:0; } /* 경로 숨김 */
 .marquee-intro {
   height: 50vh;
-
   position: relative;
+  overflow: visible;
 }
 
 .marquee-track {
   position: absolute;
-  display: flex;
+  left: 0; top: 0;
+  display: inline-flex;
   white-space: nowrap;
+  will-change: transform;
   z-index: 100;
   pointer-events: none;
+  transform: translate3d(0,0,0);
 }
-
 
 .intro-text2 {
-  font-size: 8vw;
-  font-weight: bold;
-  color: #7EFFB2;
-  margin-right: 100px;
+  font-size: 8vw; letter-spacing: -3%;
+  font-weight: 800;
+  background: linear-gradient(to right, #FFFFFF, #2F71DF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow:
+    0 0 3px #2F71DF,
+    0 0 3px #2F71DF;
 }
+
+/* 글자별 스크롤 상승 */
+.intro-text2 .char{
+  display:inline-block;
+  will-change: transform, opacity, filter;
+}
+
 
 .marquee-trigger {
   height: 100vh;
@@ -251,3 +264,26 @@ filter: blur(1px) brightness(1.5) drop-shadow(0 0 6px #2F71DF) drop-shadow(0 0 1
   text-align: center;
   position: relative;
 }
+
+
+/* clone-coding */
+/* coding */
+.cloneCoding-section {height: 150vh; margin-top: 1000px; position: relative;}
+.cloneCoding-section .innerTitle {margin-bottom: 0; margin-top: 50px;}
+.cloneCoding-section ul {display: flex; padding: 0% 30%;}
+.cloneCoding-section ul li {position: relative; flex-shrink: 0!important; width: 1000px; height: 700px; padding: 120px; box-sizing: border-box; padding-bottom: 100px;}
+.cloneCoding-section ul li > a {display: block;  position: relative;}
+.cloneCoding-section ul li > a .imgBox {position: relative; width: 100%; height: 100%;}
+.cloneCoding-section ul li > a .imgBox img {width: 100%; height: 100%;}
+.cloneCoding-section ul li > a .textBox {position: absolute; left: 0; bottom: -30%; line-height: 1.4; text-shadow: 2px 2px 10px rgba(0,0,0,0.3);}
+.cloneCoding-section ul li > a .textBox .title {font-size: 60px;}
+.cloneCoding-section ul li > a .textBox .text {font-size: 20px; padding-left: 5px;}
+.cloneCoding-section ul li .btnBox {position: absolute; right: 12%; bottom: 5%;}
+.cloneCoding-section ul li .btnBox a {display: inline-block; border: 1px solid #2F71DF; padding: 10px; box-sizing: border-box; margin-left: 10px; border-radius: 50px;}
+.cloneCoding-section ul li .btnBox a span {display: block; font-size: 15px; font-weight: normal;}
+
+
+/* counter */
+.cloneCoding-section .counter {position: absolute; font-size: 40px; right: 5%; bottom: 18%; letter-spacing: -3px; color: #ddd;}
+.cloneCoding-section .counter .now {font-size: 35px;}
+.cloneCoding-section ul li a .num {width: 100%;}
