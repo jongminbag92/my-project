@@ -28,7 +28,7 @@ body {background: #0D0D0D; color: #fff; font-family: 'Pretendard';}
 
 header {position: fixed;  width: 100%; transition: all 0.5s; z-index: 1000;}
 header.hide {transform: translateY(-100%);}
-header.show {transform: translateY(0);}
+header.show {transform: translateY(20px);}
 
 header .header-box {width: 28%; float: right; margin-top: 10px; padding: 15px; box-sizing: border-box; display: flex; justify-content: center; gap: 10px; background: rgba(221, 221, 221, 0.5); border-radius: 50px;}
 header .header-box a{padding: 5px; font-size: 18px; color: #0D0D0D;}
@@ -43,17 +43,17 @@ header .header-box a{padding: 5px; font-size: 18px; color: #0D0D0D;}
 
 
 
-.intro { width: 100%; height: 100vh; background: #fff; }
-.intro .inner { margin-top: auto; display: flex; justify-content: center; align-items: center;
-flex-direction: column; padding-top: 50px;}
+.intro {position: relative; width: 100%; height: 100vh; background: #fff; }
+.intro .inner {position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);  display: flex; justify-content: center; align-items: center;
+flex-direction: column; padding-top: 200px;}
   /* margin-top: auto를 준 자식 요소는 남는 공간을 위로 밀어내서 아래쪽에 위치하게 돼. */
 .intro .intro-title span {display: block; text-align: center; font-size: 50px; color: #0D0D0D; line-height: 1.2;}
-.intro .intro-title span.en {font-size: 60px; font-family: "PP Editorial New";}
+.intro .intro-title span.en {font-size: 60px; font-family: "PP Editorial New"; }
 
 /* 이미지 스택 */
 .stack {position: relative; width: 350px; height: 400px;}
 
-.stack img {position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 100%; border-radius: 20px; transition: all 0.8s ease; opacity: 0;}
+.stack img {position: absolute; left: 50%; top: 60%; transform: translate(-50%, -50%); width: 100%; border-radius: 20px; transition: all 0.8s ease; opacity: 0;}
 .stack img:nth-child(1) {z-index: 1; transform: translate(-50%, -50%) rotate(-10deg) translateY(200px); transition-delay: 0.3s;}
 .stack img:nth-child(2) {z-index: 2; transform: translate(-50%, -50%) rotate(10deg) translateY(500px); transition-delay: 0.5s;}
 .stack img:nth-child(3) {z-index: 3; transform: translate(-50%, -50%) rotate(0deg) translateY(700px); transition-delay: 0.7s;}
@@ -62,7 +62,7 @@ flex-direction: column; padding-top: 50px;}
 .stack img.motion:nth-child(3) {transform: translate(-50%, -50%) rotate(0deg) translateY(0px); opacity: 1; transition-delay: 0.7s;}
 
 /* intro 스플리팅 */
-.intro .intro-text {color: #0D0D0D; font-size: 300px; text-align: center;}
+.intro .intro-text {color: #0D0D0D; font-size: 300px; text-align: center; padding-top: 50px;}
 .intro-text .char {display: inline-block; position: relative; color: transparent; overflow: hidden;}
 .intro-text .char::before, .intro-text .char::after {content: attr(data-char); position: absolute; top: 0; left: 0; color: #0D0D0D; transition: transform 0.5s ease, opacity 0.35s ease; transition-delay: calc(30ms * var(--char-index));}
 .intro-text .char::before {transform: translateY(100%); opacity: 0;}
@@ -80,16 +80,34 @@ flex-direction: column; padding-top: 50px;}
 
 
 /* overview */
-.overview {width: 100%; height: 100vh; background: #FFF; padding: 60px 0; display: flex; align-items: center;}
-.overview .inner {width: 70%; display: flex; justify-content: space-between; align-items: center; gap: 60px;}
-.overview-img {width: 600px; height: auto; border-radius: 30px; overflow: hidden;}
-.overview-img img {width: 100%; height: 100%;}
+.overview {position: relative; width: 100%; height: 100vh; background: #FFF; display: flex; align-items: center;}
+.overview .inner {width: 70%; margin: 0 auto; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; justify-content: space-between; align-items: center; gap: 60px;}
+.overview-img {position: relative; width: 600px; height: auto; border-radius: 30px; overflow: hidden;}
+.overview-img:after {content: 'Hover Here!'; position: absolute; right: 5%; top: 5%; width: 100px; height: 100px; border-radius: 50px; color: #0D0D0D; display: flex; align-items: center; justify-content: center; font-weight: 500; text-align: center; z-index: 100; background: #fff;}
+.overview-img img,
+.overview-img video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.overview-img video {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity .25s ease;
+  pointer-events: none;     /* 클릭은 여전히 박스에 전달 */
+}
+
+.overview-img:hover video { opacity: 1; }
+.overview-img:hover img   { opacity: 0;  transition: opacity .25s ease; }
 
 .overview-text { width: 30%; display: flex; flex-direction: column; gap: 45px;}
 .overview-text .title {color: #0D0D0D; font-size: 20px; line-height: 1.8;}
 .overview-text .title span {font-size: 30px; font-weight: 500; display: inline-block; margin-top: 10px;}
 
-.overview-text .information {display: flex; flex-direction: column; gap: 30px;}
+.overview-text .information {display: flex; flex-direction: column; gap: 60px;}
 .overview-text .information > li {display: flex; justify-content: flex-start; gap: 40px; align-items: flex-start; color: #0D0D0D;}
 
 .information .information-tit {min-width: 80px; font-size: 18px; font-weight: 500; white-space: nowrap;}
@@ -116,13 +134,13 @@ flex-direction: column; padding-top: 50px;}
 .strength-text:first-child { opacity: 0; transform: translate(0%, 0); }
 
 /* hobby-section*/
-.hobby {position: relative; width: 100%; height: 100vh; display: flex; justify-content: center; align-items: center;}
+.hobby {position: relative; width: 100%; height: 120vh; display: flex; justify-content: center; align-items: center;}
 .hobby .section-title {position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 2;}
 .hobby .section-title h2 {font-size: 60px; margin-bottom: 20px;}
 .hobby .section-title span {font-size: 20px; color: #fff; line-height: 1.4;}
 
 .hobby-images {position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);}
-.hobby-img {position: absolute; top: 0; left: 0; width: 200px; height: 200px; overflow: hidden; object-fit: cover; border-radius: 12px; opacity: 0;}
+.hobby-img {position: absolute; top: 0; left: 0; width: 300px; height: 300px; overflow: hidden; object-fit: cover; border-radius: 12px; opacity: 0;}
 .hobby-img img {width: 100%; height: 100%;}
 
 
@@ -135,7 +153,7 @@ flex-direction: column; padding-top: 50px;}
 .skill-grid {position: absolute; overflow: hidden; gap: 3px; width: 110%; bottom: 0;  z-index: 99 !important;}
 .skill-grid .grid { width: 105%; display: flex; gap: 3px; margin-bottom: 3px;}
 .skill-grid .middle-box {transform: translateX(100px);}
-.box {position: relative; font-size: 40px; flex: 1; background: #0D0D0D; color: #FFF; padding: 100px 0; text-align: center; border: 2px solid rgba(255, 255, 255, 0.02); box-sizing: border-box;}
+.box {position: relative; font-size: 40px; flex: 1; background: #0D0D0D; color: #FFF; padding: 120px 0; text-align: center; border: 2px solid rgba(255, 255, 255, 0.02); box-sizing: border-box;}
 .box-info {position: absolute; width: 80%; height: auto; display: flex; flex-direction: column; gap: 5px;}
 .box-info p {font-weight: 600; text-align: left; margin-bottom: 20px;}
 .box-info .count-num {color: #2F71DF; font-size: 70px;}

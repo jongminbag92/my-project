@@ -10,6 +10,7 @@ window.addEventListener('DOMContentLoaded', () => {
     observeBlackSection();
     svg();
     initIntroTextScrollTrigger();
+    initOverviewHoverVideo();
     VideoSectionScrollTrigger();
     strengthScrollAnimation();
     hobbyImages();
@@ -200,10 +201,10 @@ function VideoSectionScrollTrigger() {
   gsap.timeline({
     scrollTrigger: {
       trigger: '.myvideo',
-      start: 'top 50%',
-      end: 'center 50%',
+      start: 'top 80%',
+      end: 'bottom 80%',
       scrub: 2,
-      // markers:true
+      //markers:true
     }
   })
   .to('.videoWrap', { backgroundColor:'#fff', color:'#0D0D0D', ease:'none', duration:5 }, 0)
@@ -211,6 +212,37 @@ function VideoSectionScrollTrigger() {
     { 'clip-path': 'inset(60% round 30%)' },
     { 'clip-path': 'inset(0% round 0%)', ease:'none', duration:10 }, 0
   );
+}
+
+function initOverviewHoverVideo() {
+  document.querySelectorAll('.overview-img').forEach((el) => {
+    const img = el.querySelector('img');
+    const video = el.querySelector('video');
+    if (!img || !video) return;
+
+    // 모바일 자동재생 정책 대비
+    video.muted = true;
+    video.playsInline = true;
+
+    const showVideo = () => {
+      video.currentTime = 0;
+      video.play().catch(() => {});
+      el.classList.add('is-playing');
+    };
+
+    const hideVideo = () => {
+      video.pause();
+      video.currentTime = 0;
+      el.classList.remove('is-playing');
+    };
+
+    el.addEventListener('mouseenter', showVideo);
+    el.addEventListener('mouseleave', hideVideo);
+
+    // 터치 대응(원하면 유지)
+    el.addEventListener('touchstart', showVideo, {passive: true});
+    el.addEventListener('touchend', hideVideo, {passive: true});
+  });
 }
 
 
@@ -296,12 +328,12 @@ function hobbyImages() {
       //markers:true
     }
   })
-  .to(imgs[0], { x: -550, y: -200, duration: 1 }, 0)
-  .to(imgs[1], { x: 400, y: -200, duration: 1 }, 0)
-  .to(imgs[2], { x: -450, y: 150, duration: 1 }, 0)
-  .to(imgs[3], { x: 350, y: 150, duration: 1 }, 0)
-  .to(imgs[4], { x: -100, y: -350, duration: 1 }, 0)
-  .to(imgs[5], { x: 50, y: 250, duration: 1 }, 0)
+  .to(imgs[0], { x: -650, y: -300, duration: 1 }, 0)
+  .to(imgs[1], { x: 400, y: -290, duration: 1 }, 0)
+  .to(imgs[2], { x: -700, y: 150, duration: 1 }, 0)
+  .to(imgs[3], { x: 400, y: 150, duration: 1 }, 0)
+  .to(imgs[4], { x: -100, y: -500, duration: 1 }, 0)
+  .to(imgs[5], { x: -130, y: 250, duration: 1 }, 0)
   .to(imgs[6], { x: -200, y: 250, duration: 1 }, 0);
 }
 
