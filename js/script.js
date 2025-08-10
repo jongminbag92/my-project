@@ -18,6 +18,7 @@ window.addEventListener('DOMContentLoaded', () => {
     marquee();
     cloneCodingList();
     workIntro();
+    introCard();
 });
 
 window.addEventListener('load', () => {
@@ -25,6 +26,7 @@ window.addEventListener('load', () => {
   slick();
   nuvieVideo();    // ← workList 이후 호출 필수
   attachImageCursor();
+  planCircle();
 });
 
 document.querySelectorAll('path').forEach((p, i) => {
@@ -682,3 +684,68 @@ function attachImageCursor() {
     box.addEventListener('mouseup',   () => cursor.classList.remove('is-down'));
   });
 }
+
+
+function planCircle(){
+  // 숫자 채우기
+  const s = "01234567891011 ";
+  document.getElementById("digits").setAttribute("data-text", s.repeat(2200));
+
+  // 반지름 애니메이션 (섹션 진입 시 1회)
+  gsap.set(":root", {"--r": "0px"});
+  gsap.to(":root", {
+    "--r": "65vmax",           // 화면 기준 크게 퍼지게
+    duration: 20,
+    ease: "power2.out",
+    scrollTrigger:{
+      trigger: ".processIntro",
+      start: "top 75%",
+      once: true
+    }
+  });
+}
+
+function introCard() {
+  const track = document.querySelector('.processIntro .question .questionBox');
+  if (!track) return;
+
+  // f가 트랙 안에 있으면 트랙 밖으로 이동(고정용)
+  const f = track.querySelector('.img.f');
+  if (f) track.parentElement.appendChild(f);
+
+  // 트랙의 카드들(a~e 등)
+  const items = Array.from(track.querySelectorAll('.img'));
+
+  // 화면 크기에 따라 살짝 다른 패턴(원하면 하나만 써도 됨)
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+  // 각 카드의 x 오프셋과 세로 간격(원하는 대로 수정)
+  const offsets = isMobile
+    ? ['-1vw','14vw','-10vw','16vw','-12vw']
+    : ['-26vw','18vw','-8vw','26vw','-20vw'];
+
+  const gaps = isMobile
+    ? ['36px','64px','40px','56px','44px']
+    : ['40px','90px','56px','72px','60px'];
+
+  const applyPattern = (els) => {
+    els.forEach((el, i) => {
+      el.style.setProperty('--x', offsets[i % offsets.length]);
+      el.style.setProperty('--gapY', gaps[i % gaps.length]);
+    });
+  };
+
+  applyPattern(items);
+
+  // 무한 루프용 복제(원본과 동일한 패턴 → 이음새 매끈)
+  if (!track.dataset.duped) {
+    items.forEach(el => track.appendChild(el.cloneNode(true)));
+    track.dataset.duped = '1';
+  }
+
+  const clones = Array.from(track.children).slice(items.length);
+  applyPattern(clones);
+}
+
+// 실행
+window.addEventListener('DOMContentLoaded', introCard);

@@ -272,7 +272,7 @@ filter: blur(1px) brightness(1.5) drop-shadow(0 0 6px #2F71DF) drop-shadow(0 0 1
 
 :root { --brand:#2F71DF; --ink:#0D0D0D; --muted:#8B8B8B; }
 
-.work-list {position: relative; width: 100%; height: 100vh; background: #0D0D0D; margin-bottom: 1000px;}
+.work-list {position: relative; width: 100%; height: 100vh; background: #0D0D0D;}
 .work-list .pin-wrap {height:100vh; overflow:hidden; position:relative;}
 .work-track {display:flex; height:100%; will-change: transform;}
 .work-slide {flex: 0 0 calc(100vw); /* 화면 꽉 차게(좌우 패딩 제외) */ height: 100%; display:flex;align-items:center; background: transparent;}
@@ -284,8 +284,9 @@ filter: blur(1px) brightness(1.5) drop-shadow(0 0 6px #2F71DF) drop-shadow(0 0 1
 
 /* 왼쪽 목업 이미지 */
 .work-img {width: 67%; border-radius: 18px; aspect-ratio: 16 / 9; position: relative; overflow: hidden; }
-.work-img a img {cursor: none;}
+.work-img a img {cursor: none; position: relative;}
 .work-img a img:hover {filter: brightness(70%);}
+.work-img a img:after {content: 'Figma'; position: absolute; right: 0; bottom: 0; z-index: 2; width: 20px; height: 50px; background: red;}
 .work-img > a {display: block; position: absolute; inset: 0;}
 .work-img > a img {width: 100%; height: 100%; object-fit: cover;}
 
@@ -375,3 +376,61 @@ filter: blur(1px) brightness(1.5) drop-shadow(0 0 6px #2F71DF) drop-shadow(0 0 1
   .work-img { cursor: auto; }
   .work-img .img-cursor { display: none; }
 }
+
+
+/* processIntro */
+.processIntro {width: 100%; height: 150vh; overflow: hidden; position: relative;}
+.processIntro .section-title {position: absolute; left: 50%; top: 30%; transform: translate(-50%, -30%); text-align: center; z-index: 2;}
+.processIntro .section-title h2 {font-size: 60px; margin-bottom: 20px;}
+.processIntro .section-title span {font-size: 20px; color: #fff; line-height: 1.4;}
+
+
+/* 세로 마퀴 영역 */
+.processIntro .question{position: relative; height: 100%; overflow: hidden;}
+
+/* 세로 마퀴 트랙 */
+.processIntro .question .questionBox{position:absolute; top:0; left:50%;
+transform: translate(-50%,0); display:flex; flex-direction:column; align-items:center; gap:0; animation: vmarquee var(--speed,30s) linear infinite;will-change: transform;}
+
+.processIntro .question .questionBox .img{
+  position:relative;
+  margin: 0 0 var(--gapY, 10px);
+  transform: translateX(var(--x, 0));
+  filter: drop-shadow(0 0 8px rgba(47,113,223,.25));
+}
+.processIntro .question .questionBox .img img{
+  width: clamp(180px, 26vw, 420px);
+  display:block;
+}
+
+/* 가운데 고정 */
+.processIntro .question .img.f{
+  position:absolute; left:50%; bottom:30%;
+  transform: translate(-50%,-50%);
+  z-index:5; pointer-events:none;
+}
+
+/* 가운데 텍스트/커서 그대로 유지 */
+.processIntro .question .img.f:before{
+  content: '면접관이 원하는 포트폴리오를 제작할 수 있을까?';
+  position: absolute; inset: 0;
+  display:flex; justify-content:center; align-items:center;
+  color:#1B1C1E; font-size:25px; font-weight:500; text-align:center;
+  z-index: 2;
+}
+.processIntro .question .img.f:after{
+  content: ''; position: absolute;
+  width: 2px; height: 25px; background: #2F71DF;
+  right: 23.5%; top: 50%; transform: translate(-50%, -50%);
+  animation: blink 1s infinite;
+}
+@keyframes blink{ 0%,50%{opacity:0} 100%{opacity:1} }
+
+/* 무한 루프: 한 세트 높이만큼(-50%) 올리기 */
+@keyframes vmarquee{
+  from { transform: translate(-50%, 0); }
+  to   { transform: translate(-50%, -50%); }
+}
+
+
+.process { height: 100vh;}
