@@ -19,6 +19,7 @@ button:focus {outline: none}
 body {background: #0D0D0D; color: #fff; font-family: 'Pretendard';}
 .wrap {position: relative; margin: 0 auto; letter-spacing: -2%; overflow: hidden;}
 .en {font-family: "PP Editorial New Ultralight";}
+.en2 {font-family: "PP Editorial New Ultrabold";}
 
 
 .inner {width: calc(100% - 340px); margin: 0 auto; overflow: hidden;}
@@ -100,70 +101,6 @@ flex-direction: column; padding-top: 50px;}
 .skill-info .skill-icons {display: flex; gap: 12px;}
 .skill-info .skill-icons .img {width: 50px; height: 50px; border-radius: 10px; overflow: hidden;}
 .skill-info .skill-icons .img img {width: 100%; height: 100%;}
-
-
-/* .svgAni {
-  width: 100px; 
-  margin: 100px auto;
-  display: block;
-}
-path {
-  fill: none;
-  stroke: #000;
-  stroke-width: 2;
-} */
-
-/* 초기 스타일 + 애니메이션 */
-/* #svgAni000 {
-  stroke-dasharray: 228;
-  stroke-dashoffset: 228;
-  animation: ani0 .2s linear 0s forwards;
-}
-#svgAni001 {
-  stroke-dasharray: 206;
-  stroke-dashoffset: 206;
-  animation: ani1 .5s linear 0s forwards;
-}
-#svgAni002 {
-  stroke-dasharray: 393;
-  stroke-dashoffset: 393;
-  animation: ani2 .2s linear 0.5s forwards;
-}
-#svgAni003 {
-  stroke-dasharray: 12;
-  stroke-dashoffset: 12;
-  animation: ani3 .2s linear 0.8s forwards;
-}
-#svgAni004 {
-  stroke-dasharray: 171;
-  stroke-dashoffset: 171;
-  animation: ani4 .2s linear 1s forwards;
-}
-
-
-@keyframes ani0 {
-  0% {stroke-dashoffset: 228;}
-  100% {stroke-dashoffset: 0;}
-}
-@keyframes ani1 {
-  0% {stroke-dashoffset: 206;}
-  100% {stroke-dashoffset: 0;}
-}
-@keyframes ani2 {
-  0% {stroke-dashoffset: 393;}
-  100% {stroke-dashoffset: 0;}
-}
-
-@keyframes ani3 {
-  0% {stroke-dashoffset: 12;}
-  100% {stroke-dashoffset: 0;}
-}
-@keyframes ani4 {
-  0% {stroke-dashoffset: 171;}
-  100% {stroke-dashoffset: 0;}
-} */
-
-
 
 /* strength */
 .strength-section { display: flex; position: relative; height: 100vh; width: 100vw; overflow: hidden; background: #2F71DF;}
@@ -379,7 +316,7 @@ filter: blur(1px) brightness(1.5) drop-shadow(0 0 6px #2F71DF) drop-shadow(0 0 1
 
 
 /* processIntro */
-.processIntro {width: 100%; height: 150vh; overflow: hidden; position: relative;}
+.processIntro {width: 100%; height: 150vh; overflow: hidden; position: relative; background: #0D0D0D;}
 .processIntro .section-title {position: absolute; left: 50%; top: 30%; transform: translate(-50%, -30%); text-align: center; z-index: 2;}
 .processIntro .section-title h2 {font-size: 60px; margin-bottom: 20px;}
 .processIntro .section-title span {font-size: 20px; color: #fff; line-height: 1.4;}
@@ -405,7 +342,7 @@ transform: translate(-50%,0); display:flex; flex-direction:column; align-items:c
 
 /* 가운데 고정 */
 .processIntro .question .img.f{
-  position:absolute; left:50%; bottom:30%;
+  position:absolute; left:50%; bottom: 10%;
   transform: translate(-50%,-50%);
   z-index:5; pointer-events:none;
 }
@@ -420,7 +357,7 @@ transform: translate(-50%,0); display:flex; flex-direction:column; align-items:c
 }
 .processIntro .question .img.f:after{
   content: ''; position: absolute;
-  width: 2px; height: 25px; background: #2F71DF;
+  width: 2px; height: 25px; background: #0D0D0D;
   right: 23.5%; top: 50%; transform: translate(-50%, -50%);
   animation: blink 1s infinite;
 }
@@ -433,4 +370,102 @@ transform: translate(-50%,0); display:flex; flex-direction:column; align-items:c
 }
 
 
-.process { height: 100vh;}
+
+/* con02 */
+.con02 .title {width: 100%; height: 100vh; font-size: 170px; line-height: 1; text-align: center; padding-top: 30vh; box-sizing: border-box; opacity: 0.2;}
+.con02 .title .en {font-size: 220px;}
+.con02 .worklist {width: 70%; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between;}
+.con02 .worklist li {width: 45%; margin-top: 700px;}
+.con02 .worklist li:nth-child(2n) {margin-top: 0;}
+.con02 .worklist li {display: block;}
+.con02 .worklist li .imgBox img {width: 100%;}
+.con02 .worklist li .textBox h3 {font-size: 35px; font-weight: bold; margin: 20px 0 20px;}
+.con02 .worklist li .textBox .info {font-size: 20px; font-weight: 500;}
+
+.padding {height: 50vh;}
+
+
+
+/* footer-intro */
+.footer-intro{
+  position:relative; height:50vh; background:#0D0D0D;
+  display:flex; align-items:center; overflow:hidden;
+}
+
+/* h2 기존 center 스타일은 제거/덮어쓰기 */
+.footer-intro h2{ all:unset; }
+
+.footer-intro .marquee{
+  width:100%;
+  /* 가장자리 부드럽게 페이드하고 싶으면 주석 해제
+  mask: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  -webkit-mask: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  */
+}
+
+/* 핵심 트랙: 내용이 2배가 되도록 JS로 복제 → -50%만 이동 */
+.footer-intro .marquee__inner{
+  --speed: 14s;                 /* 속도(작을수록 빠름) */
+  display:inline-flex; align-items:center;
+  gap:clamp(16px, 2.2vw, 48px);
+  white-space:nowrap;
+  width:max-content; color: #2F71DF;
+  font-size:clamp(72px, 18vw, 300px);
+  font-weight:800; letter-spacing:-0.02em; line-height:1;
+  will-change:transform;
+  animation: marqueeX var(--speed) linear infinite;
+}
+
+.footer-intro .dot{padding:0 .2em;}
+
+@keyframes marqueeX{
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); } /* 트랙(=자기 너비)의 절반만 이동 */
+}
+
+/* 모션 줄이기 환경 대응(옵션) */
+@media (prefers-reduced-motion: reduce){
+  .footer-intro .marquee__inner{ animation: none; }
+}
+
+.footer{
+  height:100vh; background:#0D0D0D; color:#fff; display: flex; justify-content: center; align-items: center;
+}
+
+
+/* 상단 좌/우 */
+.footer-top {width: 100%; display: flex; justify-content: space-between; align-items:flex-start;}
+.footer-top p {font-size: 20px;}
+
+/* 중앙 이메일 */
+
+.footer__email{
+  position:relative; display:inline-block; margin: 200px 0;
+  text-decoration:none; color:#fff;
+  font-weight:700; line-height:1.1;
+  font-size: clamp(48px, 10vw, 128px); /* 필요시 더 키워도 됨 */
+  padding-bottom: .50em;
+}
+.footer__email::before{
+  content:""; position:absolute; left:0; bottom:0;
+  height:3px; width:100%; background:#fff;
+  transform-origin:left center; transform:scaleX(0);
+  transition: transform .6s cubic-bezier(.22,.61,.36,1);
+}
+.footer__email:hover::before,
+.footer__email:focus-visible::before{
+  transform:scaleX(1); /* 좌→우로 바가 차오름 */
+}
+
+/* 하단 좌/우 */
+.footer-bottom {width: 100%; display: flex; justify-content: space-between; align-items: flex-end;}
+.footer__call {font-size: 30px;}
+.footer__call span {display: block; margin-bottom: 10px;}
+.footer__credit {text-align: right;}
+
+/* 반응형 약간 타이트하게 */
+@media (max-width: 640px){
+  .footer__inner{ padding:24px; }
+  .footer__top-right{ justify-self:start; margin-top:8px; }
+  .footer__email{ font-size: clamp(36px, 12vw, 72px); }
+}

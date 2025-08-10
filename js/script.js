@@ -18,7 +18,8 @@ window.addEventListener('DOMContentLoaded', () => {
     marquee();
     cloneCodingList();
     workIntro();
-    introCard();
+    footerMarquee();
+    
 });
 
 window.addEventListener('load', () => {
@@ -26,7 +27,8 @@ window.addEventListener('load', () => {
   slick();
   nuvieVideo();    // ← workList 이후 호출 필수
   attachImageCursor();
-  planCircle();
+  introCard();
+  process();
 });
 
 document.querySelectorAll('path').forEach((p, i) => {
@@ -566,7 +568,7 @@ function workIntro() {
       end: "+=150%",
       scrub: 1.2,
       pin: true,
-      markers:true
+      //markers:true
     }
   });
 
@@ -686,24 +688,6 @@ function attachImageCursor() {
 }
 
 
-function planCircle(){
-  // 숫자 채우기
-  const s = "01234567891011 ";
-  document.getElementById("digits").setAttribute("data-text", s.repeat(2200));
-
-  // 반지름 애니메이션 (섹션 진입 시 1회)
-  gsap.set(":root", {"--r": "0px"});
-  gsap.to(":root", {
-    "--r": "65vmax",           // 화면 기준 크게 퍼지게
-    duration: 20,
-    ease: "power2.out",
-    scrollTrigger:{
-      trigger: ".processIntro",
-      start: "top 75%",
-      once: true
-    }
-  });
-}
 
 function introCard() {
   const track = document.querySelector('.processIntro .question .questionBox');
@@ -745,7 +729,69 @@ function introCard() {
 
   const clones = Array.from(track.children).slice(items.length);
   applyPattern(clones);
+
 }
 
-// 실행
-window.addEventListener('DOMContentLoaded', introCard);
+
+
+function process() {
+  // con02
+    gsap.timeline({
+        scrollTrigger:{
+            trigger:'.con02',
+            start:'0% 100%',
+            end:'0% 20%',
+            scrub:1,
+            //markers:true
+        }
+    })
+    .fromTo('.con02 .title .a', {x:'-100%'}, {x:'0%', ease:'none', duration:5},0)
+    .fromTo('.con02 .title .b', {x:'100%'}, {x:'0%', ease:'none', duration:5},0)
+
+    
+    //worklist가 나타날때
+    gsap.timeline({
+        scrollTrigger:{
+            trigger:'.worklist',
+            start:'0% 100%',
+            end:'0% 100%',
+            scrub:1,
+            //markers:true
+        }
+    })
+    .to('.wrap',{backgroundColor:'#fff', color:'#0D0D0D', ease:'none', duration:5},0)
+    .to('.con02 .title', {position:'fixed', ease:'none', left:0, top:0, width:'100%', duration:5},0)
+    .fromTo('.worklist', {margin:'0 auto'},{margin:'100vh auto 0', position:'relative', zIndex:'10', duration:1},0)
+
+    // .worklist가 끝날때 title글자가 화면 밖으로 사라지도록 애니적용
+    gsap.timeline({
+        scrollTrigger:{
+            trigger:'.worklist',
+            start:'100% 50%',
+            end:'100% 0%',
+            scrub:1,
+            //markers:true
+        }
+    })
+    .to('.con02 .title .a', {x:'-100%', ease:'none', duration:5},0)
+    .to('.con02 .title .b', {x:'100%', ease:'none', duration:5},0)
+
+    gsap.timeline({
+    scrollTrigger:{
+      trigger: '.con02',
+      start: '70% top',
+      end:   '70% top',   // 끝 영역에서만 서서히 전환
+      scrub: 1,
+      //markers: true,
+      invalidateOnRefresh: true
+    }
+  })
+  .to('.wrap', { backgroundColor:'#0D0D0D', color:'#fff', ease:'none', duration:1 }, 0);
+
+}
+
+function footerMarquee() {
+   const el = document.querySelector('.footer-intro .marquee__inner');
+    if (!el) return;
+    el.innerHTML += el.innerHTML; // 한 번 더 이어붙이기(총 2배)
+}
