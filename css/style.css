@@ -30,7 +30,7 @@ header {position: fixed;  width: 100%; transition: all 0.5s; z-index: 1000;}
 header.hide {transform: translateY(-100%);}
 header.show {transform: translateY(20px);}
 
-header .header-box {width: 28%; float: right; margin-top: 10px; padding: 15px; box-sizing: border-box; display: flex; justify-content: center; gap: 10px; background: rgba(221, 221, 221, 0.5); border-radius: 50px;}
+header .header-box { float: right; margin-top: 10px; padding: 15px; box-sizing: border-box; display: flex; justify-content: center; gap: 10px; background: rgba(221, 221, 221, 0.5); border-radius: 50px;}
 header .header-box a{padding: 5px; font-size: 18px; color: #0D0D0D;}
 
 /* header 스플리팅 */
@@ -80,8 +80,8 @@ flex-direction: column; padding-top: 200px;}
 
 
 /* overview */
-.overview {position: relative; width: 100%; height: 100vh; background: #FFF; display: flex; align-items: center;}
-.overview .inner {width: 70%; margin: 0 auto; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; justify-content: space-between; align-items: center; gap: 60px;}
+.overview {position: relative; width: 100%;  background: #FFF; display: flex; align-items: center;}
+.overview .inner {width: 70%; margin: 0 auto;  display: flex; justify-content: space-between; align-items: center;}
 .overview-img {position: relative; width: 600px; height: auto; border-radius: 30px; overflow: hidden;}
 .overview-img img,
 .overview-img video {
@@ -480,9 +480,62 @@ transform: translate(-50%,0); display:flex; flex-direction:column; align-items:c
 .footer__call span {display: block; margin-bottom: 10px;}
 .footer__credit {text-align: right;}
 
-/* 반응형 약간 타이트하게 */
-@media (max-width: 640px){
-  .footer__inner{ padding:24px; }
-  .footer__top-right{ justify-self:start; margin-top:8px; }
-  .footer__email{ font-size: clamp(36px, 12vw, 72px); }
+@media (max-width: 1400px){
+  .intro .inner {padding-top: 130px;}
+  .intro .intro-title span.en {font-size: 50px;}
+  .intro .intro-title span {font-size: 30px;}
+  .intro .intro-text {font-size: 12vw;}
+
+  .myvideo .videoWrap .title h2 {font-size: 70px;}
+
+  .overview .inner {padding-top: 150px; width: 80%;}
+  .overview-img {width: 400px;}
+  .overview-text .title span {font-size: 25px;}
+  .overview-text .title {font-size: 16px;}
+  .overview-text {width: 60%; flex-direction:row;}
+
+
+  .strength-left p {font-size: 100px;}
+  .strength-left span {padding-right: 120px;}
+
+  .strength-text {left: 10%;}
+  .strength-text p {font-size: 55px;}
+
+  .hobby .section-title h2 {font-size: 50px;}
+  .hobby .section-title span {font-size: 16px;}
+
+  .hobby-img {width: 250px; height: 250px;}
+
+  .skill-section .section-title h2 {font-size: 50px;}
+  .box {font-size: 33px;}
+  .skill-section .section-title span {font-size: 18px;}
+  .box-info .count-num {font-size: 50px;}
+  .box-info span {font-size: 50px;}
+  
+  .work-img {width: 50%;}
+  .work-info {width: 45%;}
+
+  .cloneCoding-section ul li {padding: 110px;}
+  .processIntro .section-title span {font-size: 18px;}
+  .footer__email {font-size: clamp(48px, 10vw, 90px); }
+}
+
+@media (max-width: 1025px){
+  .intro .inner {padding-top: 130px;}
+  .intro .intro-title span.en {font-size: 50px;}
+  .intro .intro-title span {font-size: 30px;}
+  .intro .intro-text {font-size: 12vw;}
+
+  .myvideo .videoWrap .title h2 {font-size: 70px;}
+
+  .strength-left p {font-size: 100px;}
+  .strength-left span {padding-right: 120px;}
+
+  .strength-text {left: 10%;}
+  .strength-text p {font-size: 55px;}
+
+  .hobby .section-title h2 {font-size: 50px;}
+  .hobby .section-title span {font-size: 16px;}
+
+  .work-list .inner {}
 }

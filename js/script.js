@@ -316,26 +316,85 @@ function strengthScrollAnimation() {
 }
 
 function hobbyImages() {
-  const imgs = gsap.utils.toArray('.hobby-img');
+  const mm = gsap.matchMedia();
 
-  gsap.set(imgs, { opacity: 1 });
+  // 공통: 요소 보이기
+  function initBase() {
+    const imgs = gsap.utils.toArray('.hobby-img');
+    gsap.set(imgs, { opacity: 1 });
+    return imgs;
+  }
 
-  gsap.timeline({
-    scrollTrigger: {
-      trigger: '.hobby',
-      start: 'top 30%',
-      toggleActions: 'play none none reverse',
-      //markers:true
-    }
-  })
-  .to(imgs[0], { x: -650, y: -300, duration: 1 }, 0)
-  .to(imgs[1], { x: 400, y: -290, duration: 1 }, 0)
-  .to(imgs[2], { x: -700, y: 150, duration: 1 }, 0)
-  .to(imgs[3], { x: 400, y: 150, duration: 1 }, 0)
-  .to(imgs[4], { x: -100, y: -500, duration: 1 }, 0)
-  .to(imgs[5], { x: -130, y: 250, duration: 1 }, 0)
-  .to(imgs[6], { x: -200, y: 250, duration: 1 }, 0);
+  // 공통: 타임라인 생성 헬퍼 (vw/vh 좌표 배열을 받아 일괄 적용)
+  function createTL(imgs, pos) {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.hobby',
+        start: 'top 30%',
+        toggleActions: 'play none none reverse',
+        invalidateOnRefresh: true, // 리사이즈 시 좌표 재계산
+        // markers: true,
+      }
+    });
+    imgs.forEach((el, i) => {
+      const p = pos[i] || { x: 0, y: 0 };
+      tl.to(el, { x: p.x, y: p.y, duration: 1 }, 0);
+    });
+    return tl;
+  }
+
+  // ≥1200px (데스크톱)
+  mm.add("(min-width: 1200px)", () => {
+    const imgs = initBase();
+    const positions = [
+      { x: '-34vw', y: '-40vh' }, // imgs[0]
+      { x: '22vw',  y: '-40vh' }, // imgs[1]
+      { x: '-36vw', y:  '10vh' }, // imgs[2]
+      { x: '22vw',  y:  '12vh' }, // imgs[3]
+      { x: '-7vw',  y: '-54vh' }, // imgs[4]
+      { x: '-8vw',  y:  '14vh' }, // imgs[5]
+      { x: '-12vw', y:  '14vh' }, // imgs[6]
+    ];
+    const tl = createTL(imgs, positions);
+    return () => tl.kill();
+  });
+
+  // 768–1199px (태블릿)
+  mm.add("(min-width: 768px) and (max-width: 1199px)", () => {
+    const imgs = initBase();
+    const positions = [
+      { x: '-34vw', y: '-40vh' }, // imgs[0]
+      { x: '22vw',  y: '-40vh' }, // imgs[1]
+      { x: '-36vw', y:  '10vh' }, // imgs[2]
+      { x: '22vw',  y:  '12vh' }, // imgs[3]
+      { x: '-7vw',  y: '-54vh' }, // imgs[4]
+      { x: '-8vw',  y:  '14vh' }, // imgs[5]
+      { x: '-12vw', y:  '14vh' }, // imgs[6]
+    ];
+    const tl = createTL(imgs, positions);
+    return () => tl.kill();
+  });
+
+  // <768px (모바일)
+  mm.add("(max-width: 767px)", () => {
+    const imgs = initBase();
+    const positions = [
+      { x: '-22vw', y: '-14vh' },
+      { x: '18vw',  y: '-12vh' },
+      { x: '-24vw', y:  '10vh' },
+      { x: '14vw',  y:  '10vh' },
+      { x: '-4vw',  y: '-16vh' },
+      { x: '-4vw',  y:   '9vh' },
+      { x: '-8vw',  y:   '9vh' },
+    ];
+    const tl = createTL(imgs, positions);
+    return () => tl.kill();
+  });
+
+  // 이미지가 늦게 로드돼도 트리거 위치 재계산
+  window.addEventListener('load', () => ScrollTrigger.refresh());
 }
+
 
 // skill-mouse
 function skillMouse() {
