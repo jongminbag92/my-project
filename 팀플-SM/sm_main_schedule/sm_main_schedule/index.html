@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>schdule section</title>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/scrolla.jquery.min.js"></script>
+    <script src="js/splitting.min.js"></script> <!-- 꼭 이 순서 -->
+    <script src="js/script.js"></script>
+</head>
+<style>
+    *{margin: 0;padding: 0; box-sizing: border-box;}
+    html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, tbody, tfoot, thead, tr, th, td{margin:0;padding:0;}
+    h1, h2, h3, h4, h5, h6 {font-weight: 700; font-size: inherit;}
+    a {color: inherit; text-decoration: inherit;}
+    img {vertical-align: middle;}
+    a img {border: none;}
+    li {list-style: none;}
+    address, em, i {font-style: normal;}
+    a:focus {outline: none}
+    button:focus {outline: none}
+
+    .en {font-family: 'Albra Trial', sans-serif; font-weight: 200;}
+    body {font-family: 'pretendard', sans-serif; background: #121212; color: #fff; font-weight: 400;}
+    .inner{width: 90%; margin: 0 auto;}
+    h2.background {color: #FF669B;  margin: 0 auto;  font-size: 150px; justify-content: center; display: flex; text-align: center; line-height: 1; text-transform: uppercase; z-index: 0; position: relative; z-index: 1;}
+    .schedule {padding: 150px 0 0; position: relative; height: 100vh;}
+    .schedule .artist { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; }
+    .schedule .artist li {position: absolute; z-index: 10;}
+    .schedule .artist li:nth-child(1) { top: 20%; left: 30%; }
+    .schedule .artist li:nth-child(2) { top: 30%; left: 60%; }
+    .schedule .artist li:nth-child(3) { top: 50%; left: 25%; }
+    .schedule .artist li:nth-child(4) { top: 65%; left: 50% }
+    .schedule .artist img {width: 30%;}
+
+    /* @keyframes img {
+  0%   { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.schedule .artist.animate.motion.animated img {
+  animation-name: img;
+  animation-duration: 1.5s;
+  animation-fill-mode: both;
+}
+.artist img.fade-in {
+  animation: img 1.5s ease forwards;
+} */
+
+@keyframes pop-diagonal {
+  0%   { transform: translate(0, 0) scale(1) rotate(0); }
+  20%  { transform: translate(-4px, 2px) scale(1.05) rotate(-3deg); }
+  40%  { transform: translate(4px, -2px) scale(1.1) rotate(3deg); }
+  60%  { transform: translate(-3px, 1px) scale(1.15) rotate(-2deg); }
+  80%  { transform: translate(8px, -8px) scale(1.2) rotate(1deg); }
+  100% { transform: translate(30px, -30px) scale(1) rotate(0); } /* 크게 팡! 튀어나감 ↗ */
+}
+
+.schedule .artist img {
+  width: 30%;
+  filter: brightness(0.7);
+  transition: filter 0.3s ease;
+}
+
+.schedule .artist img:hover {
+  animation: pop-diagonal 0.7s ease forwards;
+  filter: brightness(1.2) saturate(1.1);
+  cursor: pointer;
+}
+.schedule .artist img.replay {
+  animation: pop-diagonal 1s ease forwards;
+}
+    </style>
+
+
+
+<body>
+    <div class="wrap">
+        <section class="schedule">
+            <div class="inner">
+                <h2 class="background">
+                    Their <br>
+                    schedule <br>
+                    Your <br>
+                    anticipation.
+                </h2>
+                <ul class="artist animate" data-animate="motion">
+                    <li><img src="IMG/schedule01.png" alt=""></li>
+                    <li><img src="IMG/schedule02.png" alt=""></li>
+                    <li><img src="IMG/schedule03.png" alt=""></li>
+                    <li><img src="IMG/schedule04.png" alt=""></li>
+                </ul>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

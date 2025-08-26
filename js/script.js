@@ -215,7 +215,7 @@ function VideoSectionScrollTrigger() {
 }
 
 function initOverviewHoverVideo() {
-  document.querySelectorAll('.overview-img').forEach((el) => {
+  document.querySelectorAll('.overview-img, .cloneCoding-section ul li > a').forEach((el) => {
     const img = el.querySelector('img');
     const video = el.querySelector('video');
     if (!img || !video) return;
@@ -344,31 +344,31 @@ function hobbyImages() {
   }
 
   // ≥1200px (데스크톱)
-  mm.add("(min-width: 1200px)", () => {
+  mm.add("(min-width: 1025px)", () => {
     const imgs = initBase();
     const positions = [
       { x: '-34vw', y: '-40vh' }, // imgs[0]
-      { x: '22vw',  y: '-40vh' }, // imgs[1]
-      { x: '-36vw', y:  '10vh' }, // imgs[2]
-      { x: '22vw',  y:  '12vh' }, // imgs[3]
+      { x: '20vw',  y: '-40vh' }, // imgs[1]
+      { x: '-34vw', y:  '10vh' }, // imgs[2]
+      { x: '20vw',  y:  '12vh' }, // imgs[3]
       { x: '-7vw',  y: '-54vh' }, // imgs[4]
-      { x: '-8vw',  y:  '14vh' }, // imgs[5]
+      { x: '-7vw',  y:  '14vh' }, // imgs[5]
       { x: '-12vw', y:  '14vh' }, // imgs[6]
     ];
     const tl = createTL(imgs, positions);
     return () => tl.kill();
   });
 
-  // 768–1199px (태블릿)
-  mm.add("(min-width: 768px) and (max-width: 1199px)", () => {
+  // 768–1024px (태블릿)
+  mm.add("(min-width: 768px) and (max-width: 1024px)", () => {
     const imgs = initBase();
     const positions = [
       { x: '-34vw', y: '-40vh' }, // imgs[0]
-      { x: '22vw',  y: '-40vh' }, // imgs[1]
-      { x: '-36vw', y:  '10vh' }, // imgs[2]
-      { x: '22vw',  y:  '12vh' }, // imgs[3]
+      { x: '20vw',  y: '-40vh' }, // imgs[1]
+      { x: '-34vw', y:  '10vh' }, // imgs[2]
+      { x: '20vw',  y:  '12vh' }, // imgs[3]
       { x: '-7vw',  y: '-54vh' }, // imgs[4]
-      { x: '-8vw',  y:  '14vh' }, // imgs[5]
+      { x: '-7vw',  y:  '14vh' }, // imgs[5]
       { x: '-12vw', y:  '14vh' }, // imgs[6]
     ];
     const tl = createTL(imgs, positions);
@@ -379,13 +379,13 @@ function hobbyImages() {
   mm.add("(max-width: 767px)", () => {
     const imgs = initBase();
     const positions = [
-      { x: '-22vw', y: '-14vh' },
-      { x: '18vw',  y: '-12vh' },
-      { x: '-24vw', y:  '10vh' },
-      { x: '14vw',  y:  '10vh' },
-      { x: '-4vw',  y: '-16vh' },
-      { x: '-4vw',  y:   '9vh' },
-      { x: '-8vw',  y:   '9vh' },
+      { x: '-34vw', y: '-40vh' }, // imgs[0]
+      { x: '20vw',  y: '-40vh' }, // imgs[1]
+      { x: '-34vw', y:  '10vh' }, // imgs[2]
+      { x: '20vw',  y:  '12vh' }, // imgs[3]
+      { x: '-7vw',  y: '-54vh' }, // imgs[4]
+      { x: '-7vw',  y:  '14vh' }, // imgs[5]
+      { x: '-12vw', y:  '14vh' }, // imgs[6]
     ];
     const tl = createTL(imgs, positions);
     return () => tl.kill();

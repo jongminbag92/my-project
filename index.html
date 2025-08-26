@@ -19,6 +19,7 @@
     <script src="js/plugin/slick.min.js"></script>
     <script src="js/script.js" defer></script>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
 
     <title>개인프로젝트</title>
 </head>
@@ -79,15 +80,20 @@
                         preload="metadata"
                         loop
                     ></video>
+                    <div class="video-text ">
+                        <div class="click-box">
+                            <span class="lnr lnr-arrow-up"></span> <br> <p class="en">Click!</p>
+                        </div>
+                        <span>Midjourney를 활용한 영상입니다!</span>
+                    </div>
                 </div>
                 <div class="overview-text">
-                    <p class="title">
-                        안녕하세요. <br>
-                        기획력과 분석력, 통찰력을 바탕으로 <br>
-                        아이디어를 구현하는<br>
-                        <span>박종민입니다.</span>
+                    <p class="title animate" data-animate="motion">
+                    <span class="about1">안녕하세요</span><br>
+                    <span class="about2">기획력과 분석력, 통찰력을 바탕으로 아이디어를 구현하는</span><br>
+                    <span class="about3">박종민입니다.</span>
                     </p>
-                    <ul class="information">
+                    <ul class="information info-top">
                         <li>
                             <p class="information-tit">프로필</p>
                             <ul class="information-sub">
@@ -107,6 +113,8 @@
                                 </li>
                             </ul>
                         </li>
+                    </ul>
+                    <ul class="information info-bottom">
                         <li>
                             <p class="information-tit">자격 사항</p>
                             <ul class="information-sub">
@@ -125,7 +133,6 @@
                             </div>
                         </li>
                     </ul>
-                    
                 </div>
             </div>
         </section>
@@ -279,7 +286,6 @@
             </div>
         </div>
 
-
         <!-- cloneCoding-section -->
         <section class="cloneCoding-section black-section">
             <div class="inner">
@@ -290,35 +296,62 @@
             </div>
             <ul>
                 <li>
-                    <a href="#">
+                    <a href="clonecoding/hanwha/index.html">
                         <div class="num" data-text="1"></div>
-                        <div class="imgBox"><img src="img/clonecodding/한화솔루션.png" alt=""></div>
+                        <div class="imgBox"><img src="img/clonecodding/한화솔루션.png" alt="">
+                        <video
+                        src="img/clonecodding/hanwha.mp4"
+                        muted
+                        playsinline
+                        preload="metadata"
+                        loop
+                    ></video></div>
                         <div class="textBox">
                             <p class="title">Hanwha Chemical</p>
                         </div>
                     </a>
                     <div class="btnBox">
-                        <a href="#"><span class="en2">Tablet</span></a>
+                        <a href="#" onclick="window.open('./clonecoding/hanwha/index.html', '_blank', 'width=768,height=1080');"><span class="en2">Tablet</span></a>
                         <a href="#"><span class="en2">Moblie</span></a>
                     </div>
                 </li>
                 <li>
                     <a href="#">
                         <div class="num" data-text="2"></div>
-                        <div class="imgBox"><img src="img/clonecodding/와이스튜디오.png" alt=""></div>
+                        <div class="imgBox"><img src="img/clonecodding/와이스튜디오.png" alt="">
+                        <video
+                        src="img/clonecodding/ystudio.mp4"
+                        muted
+                        playsinline
+                        preload="metadata"
+                        loop
+                        ></video>
+                    </div>
                         <div class="textBox">
                             <p class="title">YSTUDIO</p>
                         </div>
                     </a>
                     <div class="btnBox">
-                        <a href="#"><span class="en2">Tablet</span></a>
-                        <a href="#"><span class="en2">Moblie</span></a>
+                        <a href="#" onclick="window.open('/clonecodding/Ystudio/responsive.html', '_blank', 'width=768,height=1080');">
+                            <span class="en2">tablet</span>
+                        </a>
+                        <a href="#" onclick="window.open('./Ystudio/responsive.html', '_blank', 'width=500,height=1080');">
+                            <span class="en2">moblie</span>
+                        </a>
                     </div>
                 </li>
                 <li>
                     <a href="#">
                         <div class="num" data-text="3"></div>
-                        <div class="imgBox"><img src="img/clonecodding/크루어라모드.png" alt=""></div>
+                        <div class="imgBox"><img src="img/clonecodding/크루어라모드.png" alt="">
+                        <video
+                        src="img/clonecodding/crew_a_la.mp4"
+                        muted
+                        playsinline
+                        preload="metadata"
+                        loop
+                        ></video>
+                    </div>
                         <div class="textBox">
                             <p class="title">Crew a la mode</p>
                         </div>
@@ -331,7 +364,15 @@
                 <li>
                     <a href="#">
                         <div class="num" data-text="4"></div>
-                        <div class="imgBox"><img src="img/clonecodding/뮤자인.png"></div>
+                        <div class="imgBox"><img src="img/clonecodding/뮤자인.png">
+                        <video
+                        src="img/clonecodding/musign.mp4"
+                        muted
+                        playsinline
+                        preload="metadata"
+                        loop
+                        ></video>
+                    </div>
                         <div class="textBox">
                             <p class="title">MUSIGN</p>
                         </div>
@@ -344,7 +385,15 @@
                 <li>
                     <a href="#">
                         <div class="num" data-text="5"></div>
-                        <div class="imgBox"><img src="img/clonecodding/대방.png"></div>
+                        <div class="imgBox"><img src="img/clonecodding/대방.png">
+                        <video
+                        src="img/clonecodding/daebang.mp4"
+                        muted
+                        playsinline
+                        preload="metadata"
+                        loop
+                        ></video>
+                    </div>
                         <div class="textBox">
                             <p class="title">Daebang</p>
                         </div>
@@ -357,7 +406,15 @@
                 <li>
                     <a href="#">
                         <div class="num" data-text="6"></div>
-                        <div class="imgBox"><img src="img/clonecodding/대혜.png"></div>
+                        <div class="imgBox"><img src="img/clonecodding/대혜.png">
+                            <video
+                        src="img/clonecodding/daeha.mp4"
+                        muted
+                        playsinline
+                        preload="metadata"
+                        loop
+                        ></video>
+                        </div>
                         <div class="textBox">
                             <p class="title">DAEHYE</p>
                         </div>
@@ -370,7 +427,15 @@
                 <li>
                     <a href="#">
                         <div class="num" data-text="7"></div>
-                        <div class="imgBox"><img src="img/clonecodding/더하다.png"></div>
+                        <div class="imgBox"><img src="img/clonecodding/더하다.png">
+                        <video
+                        src="img/clonecodding/plus.mp4"
+                        muted
+                        playsinline
+                        preload="metadata"
+                        loop
+                        ></video>
+                        </div>
                         <div class="textBox">
                             <p class="title">Thehada</p>
                         </div>
