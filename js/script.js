@@ -1,5 +1,5 @@
 
-gsap.registerPlugin(ScrollTrigger, TextPlugin, MotionPathPlugin);
+gsap.registerPlugin(ScrollTrigger, TextPlugin, MotionPathPlugin, ScrollToPlugin);
 
 window.addEventListener('DOMContentLoaded', () => {
     preventAnchorBounce();
@@ -20,6 +20,7 @@ window.addEventListener('DOMContentLoaded', () => {
     cloneCodingList();
     workIntro();
     footerMarquee();
+    popup();
     
 });
 
@@ -27,9 +28,11 @@ window.addEventListener('load', () => {
   workList();      // ← 여기서 전역 scrollTween 세팅
   slick();
   nuvieVideo();    // ← workList 이후 호출 필수
+  smVideo();
   attachImageCursor();
   introCard();
   process();
+  scroll();
 });
 
 document.querySelectorAll('path').forEach((p, i) => {
@@ -360,7 +363,7 @@ function hobbyImages() {
   });
 
   // 768–1024px (태블릿)
-  mm.add("(min-width: 768px) and (max-width: 1024px)", () => {
+  mm.add("(min-width: 769px) and (max-width: 1024px)", () => {
     const imgs = initBase();
     const positions = [
       { x: '-34vw', y: '-40vh' }, // imgs[0]
@@ -376,14 +379,14 @@ function hobbyImages() {
   });
 
   // <768px (모바일)
-  mm.add("(max-width: 767px)", () => {
+  mm.add("(max-width: 768px)", () => {
     const imgs = initBase();
     const positions = [
-      { x: '-34vw', y: '-40vh' }, // imgs[0]
-      { x: '20vw',  y: '-40vh' }, // imgs[1]
+      { x: '-34vw', y: '-28vh' }, // imgs[0]
+      { x: '20vw',  y: '-28vh' }, // imgs[1]
       { x: '-34vw', y:  '10vh' }, // imgs[2]
       { x: '20vw',  y:  '12vh' }, // imgs[3]
-      { x: '-7vw',  y: '-54vh' }, // imgs[4]
+      { x: '-7vw',  y: '-38vh' }, // imgs[4]
       { x: '-7vw',  y:  '14vh' }, // imgs[5]
       { x: '-12vw', y:  '14vh' }, // imgs[6]
     ];
@@ -747,6 +750,25 @@ function nuvieVideo() {
   });
 }
 
+function smVideo() {
+  const video = document.querySelector('.slide2 .work-video');
+  if (!video || !workScrollTween) return;
+
+  // 모바일 자동재생 보장용 속성(HTML에도 넣어두면 더 좋음)
+  video.muted = true; video.playsInline = true;
+
+  ScrollTrigger.create({
+    trigger: '.slide2',
+    containerAnimation: workScrollTween,   // ✅ 정의된 트윈
+    start: 'left center',
+    end: 'right center',
+    onEnter:     () => video.play(),
+    onEnterBack: () => video.play(),
+    onLeave:     () => video.pause(),
+    onLeaveBack: () => video.pause()
+  });
+}
+
 function attachImageCursor() {
   document.querySelectorAll('.work-img').forEach(box => {
     if (box.dataset.cursorInit) return; // 중복 방지
@@ -885,4 +907,47 @@ function footerMarquee() {
    const el = document.querySelector('.footer-intro .marquee__inner');
     if (!el) return;
     el.innerHTML += el.innerHTML; // 한 번 더 이어붙이기(총 2배)
+}
+
+function scroll() {
+      const links = document.querySelectorAll('.header-box a');
+
+     links.forEach(link => {
+        link.addEventListener('click', e => {
+            e.preventDefault();
+
+            // 클릭한 링크의 data-target 값 가져오기
+            const targetClass = link.getAttribute('data-target');
+            const targetSection = document.querySelector(targetClass);
+
+            if (targetSection) {
+                gsap.to(window, {
+                    duration: 1.2,               // 스크롤 시간
+                    scrollTo: targetSection,    // 해당 섹션으로 이동
+                    ease: "power2.inOut"        // 부드러운 이징 효과
+                });
+            }
+        });
+    });
+}
+
+function popup() {
+        const emailLink = document.querySelector(".footer__email");
+  const popup = document.getElementById("copyPopup");
+  const email = "jongminbag92@gmail.com";
+
+  emailLink.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    // 클립보드에 이메일 복사
+    navigator.clipboard.writeText(email).then(() => {
+      // 팝업 표시
+      popup.classList.add("show");
+
+      // 1.5초 후 팝업 숨김
+      setTimeout(() => {
+        popup.classList.remove("show");
+      }, 1500);
+    });
+  });
 }

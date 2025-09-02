@@ -17,6 +17,7 @@
     <script src="js/plugin/splitting.min.js"></script>
     <script src="js/plugin/jquery.simplyscroll.min.js"></script>
     <script src="js/plugin/slick.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
     <script src="js/script.js" defer></script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
@@ -28,15 +29,14 @@
     <div class="wrap">
         <canvas id="starCanvas"></canvas>
         <header>
-            <div class="inner">
-                <div class="header-box">
-                    <a href="#" class="animate" data-splitting>Home</a>
-                    <a href="#" class="animate" data-splitting>About</a>
-                    <a href="#" class="animate" data-splitting>Works</a>
-                    <a href="#" class="animate" data-splitting>Projects</a>
-                    <a href="#" class="animate" data-splitting>Contact</a>
+            
+                 <div class="header-box">
+                    <a href="#" data-target=".intro" class="animate" data-splitting>Home</a>
+                    <a href="#" data-target=".overview" class="animate" data-splitting>About</a>
+                    <a href="#" data-target=".cloneCoding-section" class="animate" data-splitting>Works</a>
+                    <a href="#" data-target=".work-list" class="animate" data-splitting>Projects</a>
+                    <a href="#" data-target=".footer" class="animate" data-splitting>Contact</a>
                 </div>
-            </div>
         </header>
         <section class="intro">
             <div class="inner">
@@ -95,7 +95,7 @@
                     </p>
                     <ul class="information info-top">
                         <li>
-                            <p class="information-tit">프로필</p>
+                            <p class="information-tit">Profile</p>
                             <ul class="information-sub">
                                 <li>박종민 / PARK JONG MIN</li>
                                 <li>2000. 03. 17</li>
@@ -104,7 +104,7 @@
                             </ul>
                         </li>
                         <li>
-                            <p class="information-tit">이력</p>
+                            <p class="information-tit">Record</p>
                             <ul class="information-sub">
                                 <li>2016-2019 <span>서라벌고등학교 졸업</span> </li>
                                 <li>2020-2025 <span>동서울대학교 졸업</span> </li>
@@ -116,14 +116,14 @@
                     </ul>
                     <ul class="information info-bottom">
                         <li>
-                            <p class="information-tit">자격 사항</p>
+                            <p class="information-tit">License</p>
                             <ul class="information-sub">
                                 <li>2019. 02 <span> 2종보통운전면허</span></li>
                                 <li>2024. 08 <span>ITQ(엑셀, 파워포인트, 인터넷)</span> </li>
                             </ul>
                         </li>
                         <li class="skill-info">
-                            <p class="information-tit">SKILLS</p>
+                            <p class="information-tit">Skills</p>
                             <div class="skill-icons">
                                 <p class="img"><img src="img/overview/icon01.png" alt="VS Code"></p>
                                 <p class="img"><img src="img/overview/icon02.png" alt="VS Code"></p>
@@ -145,17 +145,17 @@
             <div class="strength-right">
               <div class="strength-texts">
                 <div class="strength-text">
-                    <p>01. Positive</p>
+                    <p>01. Positive <span>(긍정적)</span></p>
                     <span>부족하거나 어려운 상황에서도 <br>
                         긍정적으로 생각하려 노력합니다.
                     </span>
                 </div>
                 <div class="strength-text">
-                    <p>02. Politeness</p>
+                    <p>02. Politeness <span>(공손함)</span></p>
                     <span>항상 상대를 배려하는 태도를 잊지 않으려 합니다.</span>
                 </div>
                 <div class="strength-text">
-                    <p>03. Cooperative</p>
+                    <p>03. Cooperative <span>(협동)</span></p>
                     <span>함께 잘 해내기 위해 먼저 맞추는 편입니다.</span>
                 </div>
               </div>
@@ -173,7 +173,7 @@
                     </span>
                 </div>
                 <div class="hobby-images">
-                    <p class="hobby-img"><img src="img/hobby/hobby1.png" alt="배드민턴"></p>
+                    <p class="hobby-img"><img src="img/hobby/hobby1.png" alt=""></p>
                     <p class="hobby-img"><img src="img/hobby/hobby2.png" alt=""></p>
                     <p class="hobby-img"><img src="img/hobby/hobby4.png" alt=""></p>
                     <p class="hobby-img"><img src="img/hobby/hobby5.png" alt=""></p>
@@ -291,12 +291,12 @@
             <div class="inner">
                 <div class="counter en2">
                     <span class="now"></span> <!-- 현재 리스트번호 -->
-                    <span class="all">/ 7</span> <!-- 전체 리스트번호 -->
+                    <span class="all">/ 6</span> <!-- 전체 리스트번호 -->
                 </div>
             </div>
             <ul>
                 <li>
-                    <a href="clonecoding/hanwha/index.html">
+                    <a href="clonecoding/hanwha/index.html" target="_blank">
                         <div class="num" data-text="1"></div>
                         <div class="imgBox"><img src="img/clonecodding/한화솔루션.png" alt="">
                         <video
@@ -312,11 +312,12 @@
                     </a>
                     <div class="btnBox">
                         <a href="#" onclick="window.open('./clonecoding/hanwha/index.html', '_blank', 'width=768,height=1080');"><span class="en2">Tablet</span></a>
-                        <a href="#"><span class="en2">Moblie</span></a>
+
+                        <a href="#" onclick="window.open('./clonecoding/hanwha/index.html', '_blank', 'width=500,height=1080');"><span class="en2">Moblie</span></a>
                     </div>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="clonecoding/Ystudio/responsive.html" target="_blank">
                         <div class="num" data-text="2"></div>
                         <div class="imgBox"><img src="img/clonecodding/와이스튜디오.png" alt="">
                         <video
@@ -332,16 +333,13 @@
                         </div>
                     </a>
                     <div class="btnBox">
-                        <a href="#" onclick="window.open('/clonecodding/Ystudio/responsive.html', '_blank', 'width=768,height=1080');">
-                            <span class="en2">tablet</span>
-                        </a>
-                        <a href="#" onclick="window.open('./Ystudio/responsive.html', '_blank', 'width=500,height=1080');">
-                            <span class="en2">moblie</span>
-                        </a>
+                        <a href="#" onclick="window.open('./clonecoding/Ystudio/responsive.html', '_blank', 'width=768,height=1080');"><span class="en2">Tablet</span></a>
+
+                        <a href="#" onclick="window.open('./clonecoding/Ystudio/responsive.html', '_blank', 'width=500,height=1080');"><span class="en2">Moblie</span></a>
                     </div>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="clonecoding/crew_a_la_mode/index.html" target="_blank">
                         <div class="num" data-text="3"></div>
                         <div class="imgBox"><img src="img/clonecodding/크루어라모드.png" alt="">
                         <video
@@ -353,16 +351,17 @@
                         ></video>
                     </div>
                         <div class="textBox">
-                            <p class="title">Crew a la mode</p>
+                            <p class="title">Crewala mode</p>
                         </div>
                     </a>
                     <div class="btnBox">
-                        <a href="#"><span class="en2">Tablet</span></a>
-                        <a href="#"><span class="en2">Moblie</span></a>
+                        <a href="#" onclick="window.open('./clonecoding/crew_a_la_mode/index.html', '_blank', 'width=768,height=1080');"><span class="en2">Tablet</span></a>
+
+                        <a href="#" onclick="window.open('./clonecoding/crew_a_la_mode/index.html', '_blank', 'width=500,height=1080');"><span class="en2">Moblie</span></a>
                     </div>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="clonecoding/musign/index.html" target="_blank">
                         <div class="num" data-text="4"></div>
                         <div class="imgBox"><img src="img/clonecodding/뮤자인.png">
                         <video
@@ -378,34 +377,14 @@
                         </div>
                     </a>
                     <div class="btnBox">
-                        <a href="#"><span class="en2">Tablet</span></a>
-                        <a href="#"><span class="en2">Moblie</span></a>
+                        <a href="#" onclick="window.open('./clonecoding/musign/index.html', '_blank', 'width=768,height=1080');"><span class="en2">Tablet</span></a>
+
+                        <a href="#" onclick="window.open('./clonecoding/musign/index.html', '_blank', 'width=500,height=1080');"><span class="en2">Moblie</span></a>
                     </div>
                 </li>
                 <li>
-                    <a href="#">
-                        <div class="num" data-text="5"></div>
-                        <div class="imgBox"><img src="img/clonecodding/대방.png">
-                        <video
-                        src="img/clonecodding/daebang.mp4"
-                        muted
-                        playsinline
-                        preload="metadata"
-                        loop
-                        ></video>
-                    </div>
-                        <div class="textBox">
-                            <p class="title">Daebang</p>
-                        </div>
-                    </a>
-                    <div class="btnBox">
-                        <a href="#"><span class="en2">Tablet</span></a>
-                        <a href="#"><span class="en2">Moblie</span></a>
-                    </div>
-                </li>
-                <li>
-                    <a href="#">
-                        <div class="num" data-text="6"></div>
+                    <a href="clonecoding/daehae/index.html" target="_blank">
+                        <div class="num" data-text="5"></div>  
                         <div class="imgBox"><img src="img/clonecodding/대혜.png">
                             <video
                         src="img/clonecodding/daeha.mp4"
@@ -420,13 +399,14 @@
                         </div>
                     </a>
                     <div class="btnBox">
-                        <a href="#"><span class="en2">Tablet</span></a>
-                        <a href="#"><span class="en2">Moblie</span></a>
+                        <a href="#" onclick="window.open('./clonecoding/daehae/index.html', '_blank', 'width=768,height=1080');"><span class="en2">Tablet</span></a>
+
+                        <a href="#" onclick="window.open('./clonecoding/daehae/index.html', '_blank', 'width=500,height=1080');"><span class="en2">Moblie</span></a>
                     </div>
                 </li>
                 <li>
-                    <a href="#">
-                        <div class="num" data-text="7"></div>
+                    <a href="clonecoding/designPlus/responsive.html" target="_blank">
+                        <div class="num" data-text="6"></div>
                         <div class="imgBox"><img src="img/clonecodding/더하다.png">
                         <video
                         src="img/clonecodding/plus.mp4"
@@ -441,8 +421,9 @@
                         </div>
                     </a>
                     <div class="btnBox">
-                        <a href="#"><span class="en2">Tablet</span></a>
-                        <a href="#"><span class="en2">Moblie</span></a>
+                        <a href="#" onclick="window.open('./clonecoding/designPlus/responsive.html', '_blank', 'width=768,height=1080');"><span class="en2">Tablet</span></a>
+
+                        <a href="#" onclick="window.open('./clonecoding/designPlus/responsive.html', '_blank', 'width=500,height=1080');"><span class="en2">Moblie</span></a>
                     </div>
                 </li>
             </ul>
@@ -467,7 +448,11 @@
                             <h2 class="work-title en">01. Albamon</h2>
                             <div class="work-box">
                                 <div class="work-img">
-                                <a href="#"><img src="img/team-project/albamon.png" alt=""></a>
+                                <div class="work-slick">
+                                        <a href="https://www.figma.com/proto/UvyKCPm8wUBoPlfEtbRecH/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8?page-id=0%3A4&node-id=2-16185&viewport=357%2C207%2C0.15&t=JA2KbULz49CO1ubE-1&scaling=contain&content-scaling=fixed" target="_blank"><img src="img/team-project/albamon.png" alt=""></a>
+                                        <a href="https://www.figma.com/proto/UvyKCPm8wUBoPlfEtbRecH/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8?page-id=0%3A4&node-id=2-16185&viewport=357%2C207%2C0.15&t=JA2KbULz49CO1ubE-1&scaling=contain&content-scaling=fixed" target="_blank"><img src="img/team-project/albamon01.png" alt=""></a>
+                                        <a href="https://www.figma.com/proto/UvyKCPm8wUBoPlfEtbRecH/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8?page-id=0%3A4&node-id=2-16185&viewport=357%2C207%2C0.15&t=JA2KbULz49CO1ubE-1&scaling=contain&content-scaling=fixed" target="_blank"><img src="img/team-project/albamon02.png"></a>
+                                    </div>
                                 </div>
                                 <div class="work-info">
                                     <div class="work-info-title"><p>Re-design Project</p></div>
@@ -475,7 +460,7 @@
                                         <div class="title">
                                         <p>Overview</p>
                                         <span>
-                                            첫 팀 프로젝트라 부담도 있었지만, 역할을 나누고 함께 고민하면서 잘 풀어갈 수 있었습니다.
+                                            첫 팀 프로젝트라 부담도 있었지만, 역할을 나누고 함께 고민하면서 <br> 잘 풀어갈 수 있었습니다.
                                             기획과 분석을 맡아 사용자 관점에서 문제를 정리했고, 팀원 간 소통을 통해 디자인 방향을 구체화했습니다.
                                         </span>
                                         </div>
@@ -524,11 +509,13 @@
                             <h2 class="work-title en">02. SM Entertainment</h2>
                             <div class="work-box">
                                 <div class="work-img">
-                                    <div class="work-slick">
-                                        <a href="#"><img src="img/team-project/slick1.png" alt="Albamon 1"></a>
-                                        <a href="#"><img src="img/team-project/slick2.png" alt="Albamon 2"></a>
-                                        <a href="#"><img src="img/team-project/slick3.png"></a>
-                                    </div>
+                                    <a href="https://ezenac.dothome.co.kr/" target="_blank"><video class="work-video"
+                                    src="img/team-project/sm.mp4"
+                                    preload="metadata"
+                                    muted
+                                    playsinline
+                                    loop>
+                                </video></a>
                                 </div>
                                 <div class="work-info">
                                     <div class="work-info-title"><p>K-Brand Project</p></div>
@@ -586,7 +573,7 @@
                         <h2 class="work-title en">03. nuvie - Fandom App</h2>
                             <div class="work-box">
                                 <div class="work-img">
-                                <a href="#"><video class="work-video"
+                                    <a href="https://second-project-tawny-five.vercel.app/" target="_blank"><video class="work-video"
                                     src="img/team-project/nuvie.mp4"
                                     preload="metadata"
                                     muted
@@ -594,6 +581,7 @@
                                     loop>
                                 </video></a>
                                 </div>
+                                
                                 <div class="work-info">
                                     <div class="work-info-title"><p>Fandom-app Project</p></div>
                                     <div class="work-info-text">
@@ -623,7 +611,7 @@
                                             <p class="information-tit">목표</p>
                                             <ul class="information-sub2"><li>
                                                 덕질의 모든 순간을 한 곳에서! <br>
-                                                올인원 팬덤 플랫폼 <span>nuvie!</span>
+                                                <span>올인원 팬덤 플랫폼 </span>nuvie!
                                             </li></ul>
                                         </li>
 
@@ -659,12 +647,10 @@
                     </span>
                 </div>
                  <div class="question">
-                    <!-- ✅ 가운데 고정 이미지는 트랙 밖 -->
                     <p class="img f">
                     <img src="img/process_intro/gpt.png" alt="">
                     </p>
 
-                    <!-- ✅ 세로 마퀴 트랙(= 움직이는 애들) -->
                     <div class="questionBox">
                     <p class="img a"><img src="img/process_intro/intro01.png" alt=""></p>
                     <p class="img b"><img src="img/process_intro/intro02.png" alt=""></p>
@@ -722,7 +708,7 @@
                         <div class="textBox">
                             <h3 class="en2">03. Information Structure</h3>
                             <div class="info">
-                                <p>포트폴리오 구조를 알 수 있는<br>정보구조도를 작성합니다</p>
+                                <p>포트폴리오 구조를 알 수 있는 정보구조도를 작성합니다</p>
                             </div>
                         </div>
                 </li>
@@ -785,10 +771,11 @@
                 
 
                 <div class="footer__email-wrap">
-                <a class="footer__email" href="mailto:jongminbag@gmail.com">
-                    <span>jongminbag@gmail.com
+                <a class="footer__email" href="javascript:void(0)">
+                    <span>jongminbag92@gmail.com</span>
                 </a>
                 </div>
+                <div id="copyPopup" class="copy-popup">복사가 되었습니다!</div>
 
                 <div class="footer-bottom">
                     <div class="footer__call">
