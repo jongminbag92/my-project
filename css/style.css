@@ -47,19 +47,17 @@ header .header-box a{padding: 5px; font-size: 18px; color: #0D0D0D;}
 .intro .inner {position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);  display: flex; justify-content: center; align-items: center;
 flex-direction: column; padding-top: 200px;}
   /* margin-top: auto를 준 자식 요소는 남는 공간을 위로 밀어내서 아래쪽에 위치하게 돼. */
-.intro .intro-title span {display: block; text-align: center; font-size: 50px; color: #0D0D0D; line-height: 1.2;}
 .intro .intro-title span.en {font-size: 60px; font-family: "PP Editorial New"; color: #2F71DF;}
+.intro .intro-title span {display: block; text-align: center; font-size: 50px; color: #0D0D0D; line-height: 1.2;}
+
 
 /* 이미지 스택 */
 .stack {position: relative; width: 350px; height: 400px;}
 
-.stack img {position: absolute; left: 50%; top: 60%; transform: translate(-50%, -50%); width: 100%; border-radius: 20px; transition: all 0.8s ease; opacity: 0;}
-.stack img:nth-child(1) {z-index: 1; transform: translate(-50%, -50%) rotate(-10deg) translateY(200px); transition-delay: 0.3s;}
-.stack img:nth-child(2) {z-index: 2; transform: translate(-50%, -50%) rotate(10deg) translateY(500px); transition-delay: 0.5s;}
-.stack img:nth-child(3) {z-index: 3; transform: translate(-50%, -50%) rotate(0deg) translateY(700px); transition-delay: 0.7s;}
-.stack img.motion:nth-child(1) {transform: translate(-50%, -50%) rotate(-10deg) translateY(0px); opacity: 1; transition-delay: 0.3s;}
-.stack img.motion:nth-child(2) {transform: translate(-50%, -50%) rotate(10deg) translateY(0px); opacity: 1; transition-delay: 0.5s;}
-.stack img.motion:nth-child(3) {transform: translate(-50%, -50%) rotate(0deg) translateY(0px); opacity: 1; transition-delay: 0.7s;}
+.stack img {position: absolute; left: 50%; top: 60%; transform: translate(-50%, -50%); width: 100%; border-radius: 20px; opacity: 0;}
+.stack img:nth-child(1) { z-index: 1; }
+.stack img:nth-child(2) { z-index: 2; }
+.stack img:nth-child(3) { z-index: 3; }
 
 /* intro 스플리팅 */
 .intro .intro-text {color: #0D0D0D; font-size: 300px; text-align: center; padding-top: 50px;}
@@ -500,6 +498,38 @@ transform: translate(-50%,0); display:flex; flex-direction:column; align-items:c
   opacity: 1;
   bottom: 100px;
 }
+
+.top-btn {
+  position: absolute;
+  left: 50%;
+  bottom: 50px;
+  width: 60px;
+  height: 60px;
+  background-color: #2F71DF; /* 네온 블루 */
+  color: #fff;
+  font-size: 25px;
+  font-weight: 500;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 10px #2F71DF, 0 0 20px #2F71DF;
+  opacity: 1;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+/* hover 효과 */
+.top-btn:hover {
+  transform: scale(1.1);
+}
+
+/* 스크롤 시 활성화 상태 */
+.top-btn.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 
 
 @media (max-width: 1400px){

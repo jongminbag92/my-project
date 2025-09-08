@@ -5,6 +5,7 @@ window.addEventListener('DOMContentLoaded', () => {
     preventAnchorBounce();
     initScrolla();
     initSplitting();
+    imgStack();
     headerScrollEvent();
     startStarCanvasAnimation();
     observeBlackSection();
@@ -21,7 +22,7 @@ window.addEventListener('DOMContentLoaded', () => {
     workIntro();
     footerMarquee();
     popup();
-    
+    topBtn();
 });
 
 window.addEventListener('load', () => {
@@ -74,6 +75,37 @@ function headerScrollEvent() {
         }
         lastY = cur;
     });
+}
+
+function imgStack() {
+  // 반응형 오프셋(모바일에서 살짝 줄임)
+const isMobile = window.matchMedia('(max-width: 768px)').matches;
+const offset1 = isMobile ? 120 : 200;
+const offset2 = isMobile ? 300 : 500;
+const offset3 = isMobile ? 420 : 700;
+
+const imgs = gsap.utils.toArray('.stack img');
+
+// 초기 상태: 회전값 + 아래로 내려놓기
+gsap.set(imgs[0], { rotation: -10, y: offset1, opacity: 0, xPercent: -50, yPercent: -50 });
+gsap.set(imgs[1], { rotation:  10, y: offset2, opacity: 0, xPercent: -50, yPercent: -50 });
+gsap.set(imgs[2], { rotation:   0, y: offset3, opacity: 0, xPercent: -50, yPercent: -50 });
+
+// 스크롤에 따라 한 장씩 순차적으로 올라오기
+const tl = gsap.timeline({
+  scrollTrigger: {
+    trigger: '.intro',
+    start: 'top 10%',     // 섹션이 뷰포트 70% 지점에 걸리면 시작
+    end: '35% 10%',        // 스크롤 구간
+    scrub: 1,             // 스크러빙으로 부드럽게
+    //pin: true,         // 필요하면 핀으로 고정해 연출 강화
+   // markers: true
+  }
+});
+
+tl.to(imgs[0], { y: 0, opacity: 1, ease: 'power2.out' }, 0.0)
+  .to(imgs[1], { y: 0, opacity: 1, ease: 'power2.out' }, 0.45)
+  .to(imgs[2], { y: 0, opacity: 1, ease: 'power2.out' }, 0.90);
 }
 
 function svg() {
@@ -932,7 +964,7 @@ function scroll() {
 }
 
 function popup() {
-        const emailLink = document.querySelector(".footer__email");
+  const emailLink = document.querySelector(".footer__email");
   const popup = document.getElementById("copyPopup");
   const email = "jongminbag92@gmail.com";
 
@@ -950,4 +982,25 @@ function popup() {
       }, 1500);
     });
   });
+}
+
+function topBtn() {
+  const topBtn = document.getElementById("topBtn");
+
+// 스크롤 시 버튼 노출 여부 설정
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 300) {
+    topBtn.classList.add("show");
+  } else {
+    topBtn.classList.remove("show");
+  }
+});
+
+// 버튼 클릭 시 맨 위로 스크롤
+topBtn.addEventListener("click", () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+});
 }
