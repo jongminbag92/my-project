@@ -5,7 +5,7 @@ window.addEventListener('DOMContentLoaded', () => {
     preventAnchorBounce();
     initScrolla();
     initSplitting();
-    imgStack();
+    imgStackOnLoad();
     headerScrollEvent();
     startStarCanvasAnimation();
     observeBlackSection();
@@ -77,36 +77,33 @@ function headerScrollEvent() {
     });
 }
 
-function imgStack() {
-  // 반응형 오프셋(모바일에서 살짝 줄임)
-const isMobile = window.matchMedia('(max-width: 768px)').matches;
-const offset1 = isMobile ? 120 : 200;
-const offset2 = isMobile ? 300 : 500;
-const offset3 = isMobile ? 420 : 700;
+function imgStackOnLoad() {
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  const offset1 = isMobile ? 120 : 200;
+  const offset2 = isMobile ? 300 : 500;
+  const offset3 = isMobile ? 420 : 700;
 
-const imgs = gsap.utils.toArray('.stack img');
+  const imgs = gsap.utils.toArray('.stack img');
 
-// 초기 상태: 회전값 + 아래로 내려놓기
-gsap.set(imgs[0], { rotation: -10, y: offset1, opacity: 0, xPercent: -50, yPercent: -50 });
-gsap.set(imgs[1], { rotation:  10, y: offset2, opacity: 0, xPercent: -50, yPercent: -50 });
-gsap.set(imgs[2], { rotation:   0, y: offset3, opacity: 0, xPercent: -50, yPercent: -50 });
+  // 초기 상태(아래쪽에 대기 + 회전)
+  gsap.set(imgs[0], { rotation: -10, y: offset1, opacity: 0, xPercent: -50, yPercent: -50 });
+  gsap.set(imgs[1], { rotation:  10, y: offset2, opacity: 0, xPercent: -50, yPercent: -50 });
+  gsap.set(imgs[2], { rotation:   0, y: offset3, opacity: 0, xPercent: -50, yPercent: -50 });
 
-// 스크롤에 따라 한 장씩 순차적으로 올라오기
-const tl = gsap.timeline({
-  scrollTrigger: {
-    trigger: '.intro',
-    start: 'top 10%',     // 섹션이 뷰포트 70% 지점에 걸리면 시작
-    end: '35% 10%',        // 스크롤 구간
-    scrub: 1,             // 스크러빙으로 부드럽게
-    //pin: true,         // 필요하면 핀으로 고정해 연출 강화
-   // markers: true
-  }
-});
-
-tl.to(imgs[0], { y: 0, opacity: 1, ease: 'power2.out' }, 0.0)
-  .to(imgs[1], { y: 0, opacity: 1, ease: 'power2.out' }, 0.45)
-  .to(imgs[2], { y: 0, opacity: 1, ease: 'power2.out' }, 0.90);
+  // 페이지 로드 시 한 장씩 위로 겹치며 등장
+  const tl = gsap.timeline({ defaults: { ease: 'power2.out', duration: 0.9 }});
+  tl.to(imgs[0], { y: 0, opacity: 1 }, 0.00)
+    .to(imgs[1], { y: 0, opacity: 1 }, 0.35)
+    .to(imgs[2], { y: 0, opacity: 1 }, 0.70);
 }
+
+// ① 일반 새로고침/첫 로드
+window.addEventListener('load', imgStackOnLoad);
+
+// ② 사파리 bfcache(뒤로가기 복원) 대응 — 복원되면 다시 실행
+window.addEventListener('pageshow', (e) => {
+  if (e.persisted) imgStackOnLoad();
+});
 
 function svg() {
   $(function(){
