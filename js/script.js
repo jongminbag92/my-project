@@ -31,6 +31,7 @@ window.addEventListener('load', () => {
   nuvieVideo();    // ← workList 이후 호출 필수
   smVideo();
   attachImageCursor();
+  attachImageCursor2();
   introCard();
   process();
   scroll();
@@ -829,6 +830,36 @@ function attachImageCursor() {
   });
 }
 
+function attachImageCursor2() {
+  document.querySelectorAll('.cloneCoding-section ul li > a .imgBox').forEach(box => {
+    if (box.dataset.cursorInit) return; // 중복 방지
+    box.dataset.cursorInit = '1';
+
+    const cursor = document.createElement('div');
+    cursor.className = 'img-cursor';
+    cursor.textContent = 'Click!';
+    box.appendChild(cursor);
+
+    box.addEventListener('mouseenter', () => {
+      box.classList.add('cursor-visible');
+    });
+
+    box.addEventListener('mousemove', (e) => {
+      const r = box.getBoundingClientRect();
+      const x = e.clientX - r.left;
+      const y = e.clientY - r.top;
+      cursor.style.left = x + 'px';
+      cursor.style.top  = y + 'px';
+    });
+
+    box.addEventListener('mouseleave', () => {
+      box.classList.remove('cursor-visible');
+    });
+
+    box.addEventListener('mousedown', () => cursor.classList.add('is-down'));
+    box.addEventListener('mouseup',   () => cursor.classList.remove('is-down'));
+  });
+}
 
 
 function introCard() {

@@ -217,12 +217,34 @@ filter: blur(1px) brightness(1.5) drop-shadow(0 0 6px #2F71DF) drop-shadow(0 0 1
   opacity: 0;
   transition: opacity .25s ease;
   pointer-events: none;  object-fit: cover;}
-.cloneCoding-section ul li > a .imgBox:hover video { opacity: 1; }
-.cloneCoding-section ul li > a .imgBox img:hover  { opacity: 0;  transition: opacity .25s ease;}
+.cloneCoding-section ul li > a .imgBox:hover video { opacity: 1; filter: brightness(60%); }
+.cloneCoding-section ul li > a .imgBox img:hover  { opacity: 0;  transition: opacity .25s ease; cursor: none;}
 
 .cloneCoding-section ul li > a .textBox {position: absolute; left: 0; bottom: -30%; line-height: 1.4; text-shadow: 2px 2px 10px rgba(0,0,0,0.3);}
 .cloneCoding-section ul li > a .textBox .title {font-size: 60px;}
 .cloneCoding-section ul li > a .textBox .text {font-size: 20px; padding-left: 5px;}
+
+.cloneCoding-section ul li > a .imgBox .img-cursor {
+  position: absolute;
+  left: 0; top: 0;
+  width: 160px; height: 160px;          /* 원 크기 */
+  border-radius: 50%;
+  background: #fff;
+  color: #0D0D0D; font-size: 20px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+  pointer-events: none;                  /* 클릭 막지 않기 */
+  z-index: 5;
+  transform: translate(-50%, -50%) scale(.6);
+  opacity: 0;
+  box-shadow: 0 4px 24px rgba(0,0,0,.15);
+}
+/* 보이는 상태 */
+.cloneCoding-section ul li > a .imgBox.cursor-visible .img-cursor {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(0.8);
+}
+
 .cloneCoding-section ul li .btnBox {position: absolute; right: 12%; bottom: 5%;}
 .cloneCoding-section ul li .btnBox a {display: inline-block; border: 2px solid #2F71DF; padding: 10px; box-sizing: border-box; margin-left: 10px; border-radius: 50px;}
 .cloneCoding-section ul li .btnBox a:hover {background: #2F71DF; color: #fff; transition: all 0.2s;}
